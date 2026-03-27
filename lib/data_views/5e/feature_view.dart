@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/theme/text_style_extension.dart';
 import 'package:render_ttrpg_data/theme/text_styles.dart';
 
 class FeatureView extends StatelessWidget {
-  const FeatureView({super.key, required this.feature, this.card = true});
+  const FeatureView({
+    super.key,
+    required this.feature,
+    this.card = true,
+    this.showTitle = true,
+    this.showDetailsInHeader = false,
+  });
 
   final ClassFeature5e feature;
   final bool card;
+  final bool showTitle;
+  final bool showDetailsInHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +26,20 @@ class FeatureView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            feature.name,
-            style: TextStyles.of(context).getHeadline(feature.header),
-          ),
+          if (showTitle)
+            Row(
+              children: [
+                Text(
+                  feature.name,
+                  style: TextStyles.of(context).getHeadline(feature.header),
+                ),
+                Spacer(),
+                Text(
+                  "${feature.className} | LVL ${feature.level}",
+                  style: TextTheme.of(context).bodyMedium?.withAlpha(200),
+                ),
+              ],
+            ),
           for (var entry in feature.entries)
             EntryView(entry: entry, header: feature.header),
         ],

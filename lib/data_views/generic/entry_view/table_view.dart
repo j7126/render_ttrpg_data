@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/theme/text_style_extension.dart';
 import 'package:render_ttrpg_data/theme/text_styles.dart';
 
 class TableView extends StatelessWidget {
@@ -19,7 +20,7 @@ class TableView extends StatelessWidget {
       children: [
         Text(
           entry.caption ?? "",
-          style: TextStyles.withAlpha(TextStyles.of(context).headline3, 150),
+          style: TextStyles.of(context).headline3?.withAlpha(150),
         ),
         const Gap(2.0),
         if (entry.colLabels != null && entry.rows != null)

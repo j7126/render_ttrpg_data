@@ -25,10 +25,6 @@ class TextStyles {
     };
   }
 
-  static TextStyle? withAlpha(TextStyle? textStyle, int alpha) {
-    return textStyle?.copyWith(color: textStyle.color?.withAlpha(alpha));
-  }
-
   TextStyles(this._context);
 
   factory TextStyles.of(BuildContext context) {
