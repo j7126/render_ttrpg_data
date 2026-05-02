@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_ability_stat_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entries_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/list_view.dart';
+import 'package:render_ttrpg_data/data_views/generic/entry_view/options_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/ref_feature_view.dart';
+import 'package:render_ttrpg_data/data_views/generic/entry_view/ref_optional_feature_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/table_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
 
@@ -24,21 +26,11 @@ class EntryView extends StatelessWidget {
         child: Text(entry.type.name),
       ),
       FeatureEntryType.table => TableView(entry: entry),
-      FeatureEntryType.options => Container(
-        width: 200,
-        height: 30,
-        color: Colors.red,
-        child: Text(entry.type.name),
-      ),
+      FeatureEntryType.options => OptionsView(entry: entry),
       FeatureEntryType.abilityDc => EntryAbilityStatView(entry: entry),
       FeatureEntryType.abilityAttackMod => EntryAbilityStatView(entry: entry),
       FeatureEntryType.refClassFeature => RefFeatureView(entry: entry),
-      FeatureEntryType.refOptionalfeature => Container(
-        width: 200,
-        height: 30,
-        color: Colors.red,
-        child: Text(entry.type.name),
-      ),
+      FeatureEntryType.refOptionalfeature => RefOptionalFeatureView(entry: entry),
       FeatureEntryType.refSubclassFeature => Container(
         width: 200,
         height: 30,

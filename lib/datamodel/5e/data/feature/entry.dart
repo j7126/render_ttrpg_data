@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/ability.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 
 part 'entry.g.dart';
 
@@ -43,11 +44,20 @@ class FeatureEntry {
   @JsonKey(includeFromJson: false, includeToJson: true)
   ClassFeature5e? referencedFeature;
 
-  void hydrateFeatureReference(List<ClassFeature5e> classFeatures) {
+  @JsonKey(includeFromJson: false, includeToJson: true)
+  OptionalFeature? referencedOptionalFeature;
+
+  void hydrateFeatureReference(List<ClassFeature5e> classFeatures, List<OptionalFeature> optionalFeatures) {
     if (type == FeatureEntryType.refClassFeature) {
       referencedFeature = ClassFeature5e.fromReference(
         classFeatures,
         classFeature,
+      );
+    }
+    else if (type == FeatureEntryType.refOptionalfeature) {
+      referencedOptionalFeature = OptionalFeature.fromReference(
+        optionalFeatures,
+        optionalfeature,
       );
     }
   }
