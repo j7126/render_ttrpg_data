@@ -32,7 +32,12 @@ Class5e _$Class5eFromJson(Map<String, dynamic> json) =>
       ..spellsKnownProgression =
           (json['spellsKnownProgression'] as List<dynamic>?)
               ?.map((e) => (e as num).toInt())
-              .toList();
+              .toList()
+      ..startingProficiencies = json['startingProficiencies'] == null
+          ? null
+          : ClassStartingProficiencies.fromJson(
+              json['startingProficiencies'] as Map<String, dynamic>,
+            );
 
 Map<String, dynamic> _$Class5eToJson(Class5e instance) => <String, dynamic>{
   'name': instance.name,
@@ -47,6 +52,7 @@ Map<String, dynamic> _$Class5eToJson(Class5e instance) => <String, dynamic>{
   'casterProgression': instance.casterProgression,
   'cantripProgression': instance.cantripProgression,
   'spellsKnownProgression': instance.spellsKnownProgression,
+  'startingProficiencies': instance.startingProficiencies?.toJson(),
 };
 
 const _$AbilityEnumMap = {

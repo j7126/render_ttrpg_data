@@ -3,6 +3,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/ability.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/class/starting_proficiency/starting_proficiencies.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/dice.dart';
 
 part 'class.g.dart';
@@ -26,6 +27,7 @@ class Class5e extends BaseObject {
   String? casterProgression;
   List<int>? cantripProgression;
   List<int>? spellsKnownProgression;
+  ClassStartingProficiencies? startingProficiencies;
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<ClassFeature5e> classFeatures = [];

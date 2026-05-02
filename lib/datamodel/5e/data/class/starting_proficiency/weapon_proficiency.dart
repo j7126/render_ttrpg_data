@@ -1,0 +1,1 @@
+enum WeaponProficiency { simple, martial }
