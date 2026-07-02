@@ -1,7 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/ability.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/table_cell.dart';
 
 part 'entry.g.dart';
 
@@ -30,15 +32,11 @@ class FeatureEntry {
   List<Ability>? attributes;
   List<String>? colLabels;
   List<String>? colStyles;
-  List<List<String>>? rows;
+  List<List<TableCell>>? rows;
   String? classFeature;
   String? optionalfeature;
   String? subclassFeature;
-
-  @JsonKey(includeFromJson: false, includeToJson: true)
   List<FeatureEntry>? entries;
-
-  @JsonKey(includeFromJson: false, includeToJson: true)
   List<FeatureEntry>? items;
 
   @JsonKey(includeFromJson: false, includeToJson: true)
@@ -47,46 +45,32 @@ class FeatureEntry {
   @JsonKey(includeFromJson: false, includeToJson: true)
   OptionalFeature? referencedOptionalFeature;
 
-  void hydrateFeatureReference(List<ClassFeature5e> classFeatures, List<OptionalFeature> optionalFeatures) {
+  void hydrateReferences() {
     if (type == FeatureEntryType.refClassFeature) {
       referencedFeature = ClassFeature5e.fromReference(
-        classFeatures,
+        DataModel5e.classFeatures,
         classFeature,
       );
-    }
-    else if (type == FeatureEntryType.refOptionalfeature) {
+    } else if (type == FeatureEntryType.refOptionalfeature) {
       referencedOptionalFeature = OptionalFeature.fromReference(
-        optionalFeatures,
+        DataModel5e.optionalFeatures,
         optionalfeature,
       );
     }
   }
 
-  factory FeatureEntry.fromJson(Map<String, dynamic> json) {
-    var feature = _$FeatureEntryFromJson(json);
-    var jsonEntries = json["entries"] ?? json["items"];
-    var isEntries = json["entries"] != null;
-    if (jsonEntries != null) {
-      var entries = <FeatureEntry>[];
-      for (var entry in jsonEntries as List<dynamic>) {
-        if (entry is String) {
-          entries.add(
-            FeatureEntry(
-              type: isEntries ? FeatureEntryType.entry : FeatureEntryType.item,
-              name: entry,
-            ),
-          );
-        } else if (entry is Map<String, dynamic>) {
-          entries.add(FeatureEntry.fromJson(entry));
+  factory FeatureEntry.fromJson(dynamic json) {
+    if (json is String) {
+      return FeatureEntry(type: FeatureEntryType.entry, name: json);
+    } else {
+      var feature = _$FeatureEntryFromJson(json);
+      for (FeatureEntry item in feature.items ?? []) {
+        if (item.type == FeatureEntryType.entry) {
+          item.type = FeatureEntryType.item;
         }
       }
-      if (isEntries) {
-        feature.entries = entries;
-      } else {
-        feature.items = entries;
-      }
+      return feature;
     }
-    return feature;
   }
 
   Map<String, dynamic> toJson() => _$FeatureEntryToJson(this);
@@ -117,4 +101,6 @@ enum FeatureEntryType {
   refSubclassFeature,
   entry,
   inset,
+  quote,
+  section,
 }

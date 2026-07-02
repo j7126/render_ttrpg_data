@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'condition.dart';
+part of 'item_group.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Condition _$ConditionFromJson(Map<String, dynamic> json) => Condition(
+ItemGroup _$ItemGroupFromJson(Map<String, dynamic> json) => ItemGroup(
   name: json['name'] as String,
   source: json['source'] as String,
   page: (json['page'] as num?)?.toInt(),
@@ -14,19 +14,21 @@ Condition _$ConditionFromJson(Map<String, dynamic> json) => Condition(
       ?.map((e) => BookSource.fromJson(e as Map<String, dynamic>))
       .toList(),
   srd: json['srd'],
-  entries:
-      (json['entries'] as List<dynamic>?)
-          ?.map(FeatureEntry.fromJson)
-          .toList() ??
-      const [],
-)..basicRules = json['basicRules'] as bool?;
+  basicRules: json['basicRules'] as bool?,
+  type: json['type'] as String?,
+  rarity: json['rarity'] as String?,
+  items: (json['items'] as List<dynamic>).map((e) => e as String).toList(),
+);
 
-Map<String, dynamic> _$ConditionToJson(Condition instance) => <String, dynamic>{
+Map<String, dynamic> _$ItemGroupToJson(ItemGroup instance) => <String, dynamic>{
   'source': instance.source,
   'page': instance.page,
   'otherSources': instance.otherSources?.map((e) => e.toJson()).toList(),
   'srd': instance.srd,
   'basicRules': instance.basicRules,
   'name': instance.name,
-  'entries': instance.entries.map((e) => e.toJson()).toList(),
+  'type': instance.type,
+  'itemType': instance.itemType?.toJson(),
+  'rarity': instance.rarity,
+  'items': instance.items,
 };

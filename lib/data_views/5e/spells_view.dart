@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/item/item_like.dart';
+import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 
-class ItemsView extends StatefulWidget {
-  const ItemsView({super.key, required this.items});
+class SpellsView extends StatefulWidget {
+  const SpellsView({super.key, required this.spells});
 
-  final List<ItemLike> items;
+  final List<Spell> spells;
 
   @override
-  State<ItemsView> createState() => _ItemsViewState();
+  State<SpellsView> createState() => _SpellsViewState();
 }
 
-class _ItemsViewState extends State<ItemsView> {
-  List<ItemLike> items = [];
+class _SpellsViewState extends State<SpellsView> {
+  List<Spell> spells = [];
 
   @override
   void initState() {
@@ -23,12 +23,14 @@ class _ItemsViewState extends State<ItemsView> {
   void search(String searchString) {
     setState(() {
       if (searchString.isEmpty) {
-        items = widget.items.toList();
+        spells = widget.spells.toList();
         return;
       }
 
       searchString = searchString.toLowerCase();
-      items = widget.items.where((x) => x.searchCompare(searchString)).toList();
+      spells = widget.spells
+          .where((x) => x.searchCompare(searchString))
+          .toList();
     });
   }
 
@@ -50,7 +52,7 @@ class _ItemsViewState extends State<ItemsView> {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
                 child: Text(
-                  "Item",
+                  "Spell",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -70,7 +72,7 @@ class _ItemsViewState extends State<ItemsView> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: items.length,
+            itemCount: spells.length,
             itemExtent: 32,
             itemBuilder: (context, i) => Container(
               decoration: BoxDecoration(
@@ -88,7 +90,7 @@ class _ItemsViewState extends State<ItemsView> {
                             horizontal: 20.0,
                           ),
                           child: SingleChildScrollView(
-                            child: ItemView(item: items[i], card: false),
+                            child: SpellView(spell: spells[i], card: false),
                           ),
                         ),
                       );
@@ -103,7 +105,7 @@ class _ItemsViewState extends State<ItemsView> {
                           vertical: 4.0,
                           horizontal: 4.0,
                         ),
-                        child: Text(items[i].name, textAlign: TextAlign.center),
+                        child: Text(spells[i].name, textAlign: TextAlign.center),
                       ),
                     ),
                     Expanded(
@@ -113,7 +115,7 @@ class _ItemsViewState extends State<ItemsView> {
                           horizontal: 4.0,
                         ),
                         child: Text(
-                          items[i].source,
+                          spells[i].source,
                           textAlign: TextAlign.center,
                         ),
                       ),

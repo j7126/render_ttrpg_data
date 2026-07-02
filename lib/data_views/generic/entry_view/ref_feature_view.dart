@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/5e/feature_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class RefFeatureView extends StatelessWidget {
   const RefFeatureView({super.key, required this.entry});

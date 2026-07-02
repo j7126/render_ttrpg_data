@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_ability_stat_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entries_view.dart';
+import 'package:render_ttrpg_data/data_views/generic/entry_view/inset_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/list_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/options_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/ref_feature_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/ref_optional_feature_view.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/table_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/data_views/generic/entry_view/text_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class EntryView extends StatelessWidget {
   const EntryView({super.key, required this.entry, this.header = 1});
@@ -30,16 +32,25 @@ class EntryView extends StatelessWidget {
       FeatureEntryType.abilityDc => EntryAbilityStatView(entry: entry),
       FeatureEntryType.abilityAttackMod => EntryAbilityStatView(entry: entry),
       FeatureEntryType.refClassFeature => RefFeatureView(entry: entry),
-      FeatureEntryType.refOptionalfeature => RefOptionalFeatureView(entry: entry),
+      FeatureEntryType.refOptionalfeature => RefOptionalFeatureView(
+        entry: entry,
+      ),
       FeatureEntryType.refSubclassFeature => Container(
         width: 200,
         height: 30,
         color: Colors.red,
         child: Text(entry.type.name),
       ),
-      _ => Padding(
+      FeatureEntryType.entry => Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0),
-        child: Text(entry.name ?? ""),
+        child: TextView(entry.name ?? ""),
+      ),
+      FeatureEntryType.inset => InsetView(entry: entry, header: header),
+      _ => Container(
+        width: 200,
+        height: 30,
+        color: Colors.red,
+        child: Text(entry.type.name),
       ),
     };
   }

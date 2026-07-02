@@ -2,12 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 part 'optional_feature.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class OptionalFeature extends BaseObject {
+class OptionalFeature extends NamedBaseObject {
   OptionalFeature({
     required super.name,
     required super.source,
@@ -19,8 +19,6 @@ class OptionalFeature extends BaseObject {
   });
 
   List<String> featureType;
-
-  @JsonKey(includeFromJson: false, includeToJson: true)
   List<FeatureEntry> entries;
 
   static OptionalFeature? fromReference(
@@ -29,7 +27,10 @@ class OptionalFeature extends BaseObject {
   ) {
     var splitRef = reference?.split("|");
 
-    if (features == null || splitRef == null || splitRef.isEmpty || splitRef[0].isEmpty) {
+    if (features == null ||
+        splitRef == null ||
+        splitRef.isEmpty ||
+        splitRef[0].isEmpty) {
       return null;
     }
 
@@ -37,24 +38,12 @@ class OptionalFeature extends BaseObject {
     var source = splitRef.length > 1 ? splitRef[1] : "";
     return features.firstWhereOrNull(
       (OptionalFeature x) =>
-          (x.name == name) &&
-          (source.isEmpty || x.source == source)
+          (x.name == name) && (source.isEmpty || x.source == source),
     );
   }
 
-  factory OptionalFeature.fromJson(Map<String, dynamic> json) {
-    var feature = _$OptionalFeatureFromJson(json);
-    var entries = <FeatureEntry>[];
-    for (var entry in json["entries"] as List<dynamic>) {
-      if (entry is String) {
-        entries.add(FeatureEntry(type: FeatureEntryType.entry, name: entry));
-      } else if (entry is Map<String, dynamic>) {
-        entries.add(FeatureEntry.fromJson(entry));
-      }
-    }
-    feature.entries = entries;
-    return feature;
-  }
+  factory OptionalFeature.fromJson(Map<String, dynamic> json) =>
+      _$OptionalFeatureFromJson(json);
 
   Map<String, dynamic> toJson() => _$OptionalFeatureToJson(this);
 }

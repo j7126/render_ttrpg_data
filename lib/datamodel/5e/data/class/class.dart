@@ -9,7 +9,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/dice.dart';
 part 'class.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Class5e extends BaseObject {
+class Class5e extends NamedBaseObject {
   Class5e({
     required super.name,
     required super.source,

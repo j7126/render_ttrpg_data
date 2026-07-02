@@ -2,12 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 part 'class_feature.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ClassFeature5e extends BaseObject {
+class ClassFeature5e extends NamedBaseObject {
   ClassFeature5e({
     required super.name,
     required super.source,
@@ -25,8 +25,6 @@ class ClassFeature5e extends BaseObject {
   String classSource;
   int level;
   int header;
-
-  @JsonKey(includeFromJson: false, includeToJson: true)
   List<FeatureEntry> entries;
 
   static ClassFeature5e? fromReference(
@@ -52,19 +50,7 @@ class ClassFeature5e extends BaseObject {
     );
   }
 
-  factory ClassFeature5e.fromJson(Map<String, dynamic> json) {
-    var feature = _$ClassFeature5eFromJson(json);
-    var entries = <FeatureEntry>[];
-    for (var entry in json["entries"] as List<dynamic>) {
-      if (entry is String) {
-        entries.add(FeatureEntry(type: FeatureEntryType.entry, name: entry));
-      } else if (entry is Map<String, dynamic>) {
-        entries.add(FeatureEntry.fromJson(entry));
-      }
-    }
-    feature.entries = entries;
-    return feature;
-  }
+  factory ClassFeature5e.fromJson(Map<String, dynamic> json) => _$ClassFeature5eFromJson(json);
 
   Map<String, dynamic> toJson() => _$ClassFeature5eToJson(this);
 }

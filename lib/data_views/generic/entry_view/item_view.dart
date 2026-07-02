@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/data_views/generic/entry_view/text_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class EntryItemView extends StatelessWidget {
   const EntryItemView({super.key, required this.entry});
@@ -18,7 +19,7 @@ class EntryItemView extends StatelessWidget {
           Icon(Icons.remove, size: 20),
           Gap(8.0),
           Flexible(
-            child: Text(
+            child: TextView(
               entry.name ?? "",
               style: TextTheme.of(context).bodyMedium,
             ),

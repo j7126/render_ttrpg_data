@@ -1,0 +1,1 @@
+enum WeaponCategory { simple, martial }

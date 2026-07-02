@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/condition/condition.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 import 'package:render_ttrpg_data/widgets/fixed_thumb_scroll_view.dart';
 
-class ConditionView extends StatelessWidget {
-  const ConditionView({
+class SpellView extends StatelessWidget {
+  const SpellView({
     super.key,
-    required this.condition,
+    required this.spell,
     this.card = true,
     this.outlined = false,
     this.scrollable = false,
   });
 
-  final Condition condition;
+  final Spell spell;
   final bool card;
   final bool outlined;
   final bool scrollable;
@@ -24,8 +24,9 @@ class ConditionView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(condition.name, style: TextTheme.of(context).titleLarge),
-          for (var entry in condition.entries)
+          Text(spell.name, style: TextTheme.of(context).headlineSmall),
+          for (var entry in spell.entries) EntryView(entry: entry, header: 1),
+          for (var entry in spell.entriesHigherLevel)
             EntryView(entry: entry, header: 1),
         ],
       ),

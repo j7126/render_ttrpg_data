@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/item_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class EntryListView extends StatelessWidget {
   const EntryListView({super.key, required this.entry});

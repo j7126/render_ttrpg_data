@@ -1,8 +1,20 @@
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 
-class BaseObject {
-  BaseObject({
+abstract class NamedBaseObject extends BaseObject {
+  NamedBaseObject({
     required this.name,
+    required super.source,
+    super.page,
+    super.otherSources,
+    super.srd,
+    super.basicRules,
+  });
+
+  String name;
+}
+
+abstract class BaseObject {
+  BaseObject({
     required this.source,
     this.page,
     this.otherSources,
@@ -10,7 +22,6 @@ class BaseObject {
     this.basicRules,
   });
 
-  String name;
   String source;
   int? page;
   List<BookSource>? otherSources;

@@ -19,16 +19,21 @@ ClassFeature5e _$ClassFeature5eFromJson(Map<String, dynamic> json) =>
       classSource: json['classSource'] as String,
       level: (json['level'] as num).toInt(),
       header: (json['header'] as num?)?.toInt() ?? 0,
+      entries:
+          (json['entries'] as List<dynamic>?)
+              ?.map(FeatureEntry.fromJson)
+              .toList() ??
+          const [],
     )..basicRules = json['basicRules'] as bool?;
 
 Map<String, dynamic> _$ClassFeature5eToJson(ClassFeature5e instance) =>
     <String, dynamic>{
-      'name': instance.name,
       'source': instance.source,
       'page': instance.page,
       'otherSources': instance.otherSources?.map((e) => e.toJson()).toList(),
       'srd': instance.srd,
       'basicRules': instance.basicRules,
+      'name': instance.name,
       'className': instance.className,
       'classSource': instance.classSource,
       'level': instance.level,

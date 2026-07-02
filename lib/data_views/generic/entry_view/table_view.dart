@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/theme/text_style_extension.dart';
 import 'package:render_ttrpg_data/theme/text_styles.dart';
 
@@ -59,7 +59,17 @@ class TableView extends StatelessWidget {
                             vertical: 2.0,
                             horizontal: 4.0,
                           ),
-                          child: Text(cell, textAlign: TextAlign.center),
+                          child: Text(
+                            cell.entry ??
+                                (cell.roll != null
+                                    ? cell.roll!.exact?.toString() ??
+                                          (cell.roll!.min != null &&
+                                                  cell.roll!.max != null
+                                              ? "${cell.roll!.min} - ${cell.roll!.max}"
+                                              : "")
+                                    : ""),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                   ],

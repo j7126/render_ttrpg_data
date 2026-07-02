@@ -11,39 +11,60 @@ class FeatureView extends StatelessWidget {
     this.card = true,
     this.showTitle = true,
     this.showDetailsInHeader = false,
+    this.collapsible = false,
   });
 
   final ClassFeature5e feature;
   final bool card;
   final bool showTitle;
   final bool showDetailsInHeader;
+  final bool collapsible;
 
   @override
   Widget build(BuildContext context) {
+    var titleRow = Row(
+      children: [
+        Text(
+          feature.name,
+          style: TextStyles.of(context).getHeadline(feature.header),
+        ),
+        Spacer(),
+        Text(
+          "${feature.className} | LVL ${feature.level}",
+          style: TextTheme.of(context).bodyMedium?.withAlpha(200),
+        ),
+      ],
+    );
     var featureView = SizedBox(
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (showTitle)
-            Row(
+      child: collapsible
+          ? ExpansionTile(
+              title: titleRow,
+              dense: true,
+              expandedCrossAxisAlignment: CrossAxisAlignment.start,
+              expandedAlignment: AlignmentGeometry.centerLeft,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+              collapsedShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+              childrenPadding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+              tilePadding: EdgeInsets.symmetric(horizontal: 8),
               children: [
-                Text(
-                  feature.name,
-                  style: TextStyles.of(context).getHeadline(feature.header),
-                ),
-                Spacer(),
-                Text(
-                  "${feature.className} | LVL ${feature.level}",
-                  style: TextTheme.of(context).bodyMedium?.withAlpha(200),
-                ),
+                for (var entry in feature.entries)
+                  EntryView(entry: entry, header: feature.header),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (showTitle) titleRow,
+                for (var entry in feature.entries)
+                  EntryView(entry: entry, header: feature.header),
               ],
             ),
-          for (var entry in feature.entries)
-            EntryView(entry: entry, header: feature.header),
-        ],
-      ),
     );
     return card
         ? Card(

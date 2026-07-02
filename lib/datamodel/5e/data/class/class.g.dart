@@ -15,7 +15,7 @@ Class5e _$Class5eFromJson(Map<String, dynamic> json) =>
             ?.map((e) => BookSource.fromJson(e as Map<String, dynamic>))
             .toList(),
         srd: json['srd'],
-        hd: Dice.fromJson(json['hd'] as Map<String, dynamic>),
+        hd: Dice.fromJson(json['hd']),
         proficiency: (json['proficiency'] as List<dynamic>)
             .map((e) => $enumDecode(_$AbilityEnumMap, e))
             .toList(),
@@ -40,12 +40,12 @@ Class5e _$Class5eFromJson(Map<String, dynamic> json) =>
             );
 
 Map<String, dynamic> _$Class5eToJson(Class5e instance) => <String, dynamic>{
-  'name': instance.name,
   'source': instance.source,
   'page': instance.page,
   'otherSources': instance.otherSources?.map((e) => e.toJson()).toList(),
   'srd': instance.srd,
   'basicRules': instance.basicRules,
+  'name': instance.name,
   'hd': instance.hd.toJson(),
   'proficiency': instance.proficiency.map((e) => _$AbilityEnumMap[e]!).toList(),
   'spellcastingAbility': _$AbilityEnumMap[instance.spellcastingAbility],
