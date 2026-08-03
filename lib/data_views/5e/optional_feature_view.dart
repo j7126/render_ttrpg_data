@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 import 'package:render_ttrpg_data/theme/text_style_extension.dart';
+import 'package:render_ttrpg_data/theme/text_styles.dart';
 
 class OptionalFeatureView extends StatelessWidget {
   const OptionalFeatureView({
@@ -10,12 +11,14 @@ class OptionalFeatureView extends StatelessWidget {
     this.card = true,
     this.showTitle = true,
     this.showDetailsInHeader = false,
+    this.header = 1,
   });
 
   final OptionalFeature feature;
   final bool card;
   final bool showTitle;
   final bool showDetailsInHeader;
+  final int header;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class OptionalFeatureView extends StatelessWidget {
               children: [
                 Text(
                   feature.name,
+                  style: TextStyles.of(context).getHeadline(header + 1),
                 ),
                 Spacer(),
                 Text(
@@ -38,8 +42,7 @@ class OptionalFeatureView extends StatelessWidget {
                 ),
               ],
             ),
-          for (var entry in feature.entries)
-            EntryView(entry: entry),
+          for (var entry in feature.entries) EntryView(entry: entry),
         ],
       ),
     );

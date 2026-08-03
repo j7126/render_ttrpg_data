@@ -51,6 +51,11 @@ class FeatureEntry {
         DataModel5e.classFeatures,
         classFeature,
       );
+    } else if (type == FeatureEntryType.refSubclassFeature) {
+      referencedFeature = ClassFeature5e.fromReference(
+        DataModel5e.classFeatures,
+        subclassFeature,
+      );
     } else if (type == FeatureEntryType.refOptionalfeature) {
       referencedOptionalFeature = OptionalFeature.fromReference(
         DataModel5e.optionalFeatures,
@@ -103,4 +108,5 @@ enum FeatureEntryType {
   inset,
   quote,
   section,
+  itemSpell,
 }

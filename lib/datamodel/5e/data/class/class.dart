@@ -32,6 +32,9 @@ class Class5e extends NamedBaseObject {
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<ClassFeature5e> classFeatures = [];
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  List<String> gainSubClassFeatures = [];
+
   factory Class5e.fromJson(
     Map<String, dynamic> json,
     List<ClassFeature5e> classFeatures,
@@ -43,6 +46,9 @@ class Class5e extends NamedBaseObject {
         featString = feat;
       } else {
         featString = feat["classFeature"];
+        if (feat["gainSubclassFeature"] == true) {
+          result.gainSubClassFeatures.add(featString);
+        }
       }
       var feature = ClassFeature5e.fromReference(classFeatures, featString);
       if (feature != null) {

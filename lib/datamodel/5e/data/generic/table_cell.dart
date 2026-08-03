@@ -10,8 +10,11 @@ class TableCell {
   String? entry;
   DiceRollCondition? roll;
 
-  factory TableCell.fromJson(dynamic json) =>
-      json is String ? TableCell(entry: json) : _$TableCellFromJson(json);
+  factory TableCell.fromJson(dynamic json) => json is String
+      ? TableCell(entry: json)
+      : json is int
+      ? TableCell(entry: json.toString())
+      : _$TableCellFromJson(json);
 
   Map<String, dynamic> toJson() => _$TableCellToJson(this);
 }

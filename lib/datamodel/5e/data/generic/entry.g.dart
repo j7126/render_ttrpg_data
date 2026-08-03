@@ -67,6 +67,7 @@ const _$FeatureEntryTypeEnumMap = {
   FeatureEntryType.inset: 'inset',
   FeatureEntryType.quote: 'quote',
   FeatureEntryType.section: 'section',
+  FeatureEntryType.itemSpell: 'itemSpell',
 };
 
 const _$AbilityEnumMap = {

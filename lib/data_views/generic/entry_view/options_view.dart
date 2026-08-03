@@ -3,9 +3,10 @@ import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart'
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class OptionsView extends StatelessWidget {
-  const OptionsView({super.key, required this.entry});
+  const OptionsView({super.key, required this.entry, this.header = 1});
 
   final FeatureEntry entry;
+  final int header;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,10 @@ class OptionsView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 for (var entry in entry.entries ?? [])
-                  EntryView(entry: entry),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 6.0),
+                    child: EntryView(entry: entry, header: header + 1),
+                  ),
               ],
             ),
           ),

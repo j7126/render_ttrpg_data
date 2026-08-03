@@ -28,19 +28,15 @@ class EntryView extends StatelessWidget {
         child: Text(entry.type.name),
       ),
       FeatureEntryType.table => TableView(entry: entry),
-      FeatureEntryType.options => OptionsView(entry: entry),
+      FeatureEntryType.options => OptionsView(entry: entry, header: header),
       FeatureEntryType.abilityDc => EntryAbilityStatView(entry: entry),
       FeatureEntryType.abilityAttackMod => EntryAbilityStatView(entry: entry),
       FeatureEntryType.refClassFeature => RefFeatureView(entry: entry),
       FeatureEntryType.refOptionalfeature => RefOptionalFeatureView(
         entry: entry,
+        header: header,
       ),
-      FeatureEntryType.refSubclassFeature => Container(
-        width: 200,
-        height: 30,
-        color: Colors.red,
-        child: Text(entry.type.name),
-      ),
+      FeatureEntryType.refSubclassFeature => RefFeatureView(entry: entry),
       FeatureEntryType.entry => Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0),
         child: TextView(entry.name ?? ""),

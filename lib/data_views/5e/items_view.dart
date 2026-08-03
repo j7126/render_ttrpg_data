@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_like.dart';
 
 class ItemsView extends StatefulWidget {
-  const ItemsView({super.key, required this.items});
-
-  final List<ItemLike> items;
+  const ItemsView({super.key});
 
   @override
   State<ItemsView> createState() => _ItemsViewState();
 }
 
 class _ItemsViewState extends State<ItemsView> {
+  List<ItemLike> allItems = [];
   List<ItemLike> items = [];
 
   @override
   void initState() {
+    allItems = [...DataModel5e.items, ...DataModel5e.itemGroups];
     search("");
     super.initState();
   }
@@ -23,12 +24,12 @@ class _ItemsViewState extends State<ItemsView> {
   void search(String searchString) {
     setState(() {
       if (searchString.isEmpty) {
-        items = widget.items.toList();
+        items = allItems.toList();
         return;
       }
 
       searchString = searchString.toLowerCase();
-      items = widget.items.where((x) => x.searchCompare(searchString)).toList();
+      items = allItems.where((x) => x.searchCompare(searchString)).toList();
     });
   }
 

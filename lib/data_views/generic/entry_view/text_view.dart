@@ -18,11 +18,13 @@ class TextView extends StatefulWidget {
 
 class _TextViewState extends State<TextView> {
   InlineSpan renderText(String? type, String content) {
-    if (type == "i") {
+    if (type == "i" || type == "italic") {
       return TextSpan(
         text: content,
         style: TextStyle(fontStyle: FontStyle.italic),
       );
+    } else if (type == "dc") {
+      return TextSpan(text: "DC $content");
     } else if (type == "dice") {
       // TODO: implement dice rendering
       return TextSpan(

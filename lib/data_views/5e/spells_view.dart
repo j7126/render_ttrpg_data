@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 
 class SpellsView extends StatefulWidget {
-  const SpellsView({super.key, required this.spells});
-
-  final List<Spell> spells;
+  const SpellsView({super.key});
 
   @override
   State<SpellsView> createState() => _SpellsViewState();
@@ -23,12 +22,12 @@ class _SpellsViewState extends State<SpellsView> {
   void search(String searchString) {
     setState(() {
       if (searchString.isEmpty) {
-        spells = widget.spells.toList();
+        spells = DataModel5e.spells.toList();
         return;
       }
 
       searchString = searchString.toLowerCase();
-      spells = widget.spells
+      spells = DataModel5e.spells
           .where((x) => x.searchCompare(searchString))
           .toList();
     });
@@ -105,7 +104,10 @@ class _SpellsViewState extends State<SpellsView> {
                           vertical: 4.0,
                           horizontal: 4.0,
                         ),
-                        child: Text(spells[i].name, textAlign: TextAlign.center),
+                        child: Text(
+                          spells[i].name,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     Expanded(

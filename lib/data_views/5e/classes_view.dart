@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 
 class ClassesView extends StatelessWidget {
-  const ClassesView({super.key, required this.classes, required this.onOpen});
+  const ClassesView({super.key, required this.onOpen});
 
-  final List<Class5e> classes;
   final Function(Class5e) onOpen;
 
   @override
@@ -38,7 +38,7 @@ class ClassesView extends StatelessWidget {
             ),
           ],
         ),
-        for (var (index, class5e) in classes.indexed)
+        for (var (index, class5e) in DataModel5e.classes.indexed)
           TableRow(
             decoration: BoxDecoration(
               color: index % 2 == 0 ? foregroundColor.withAlpha(30) : null,

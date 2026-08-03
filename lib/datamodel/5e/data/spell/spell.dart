@@ -1,10 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/casting_time.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_duration.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_range.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_school.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_source.dart';
 
 part 'spell.g.dart';
 
@@ -23,16 +26,19 @@ class Spell extends NamedBaseObject {
     required this.duration,
     this.entries = const [],
     this.entriesHigherLevel = const [],
+    this.spellClassSource,
   });
-  
+
   int level;
-  String school;
+  SpellSchool school;
   List<CastingTime> time;
   SpellRange range;
   List<SpellDuration> duration;
-  
+
   List<FeatureEntry> entries;
   List<FeatureEntry> entriesHigherLevel;
+
+  SpellSource? spellClassSource;
 
   factory Spell.fromJson(Map<String, dynamic> json) => _$SpellFromJson(json);
 
@@ -46,5 +52,9 @@ class Spell extends NamedBaseObject {
   bool refCompare(String searchString) {
     return name.toLowerCase() == searchString ||
         (srd is String && srd.toLowerCase() == searchString);
+  }
+
+  void hydrateReferences() {
+    spellClassSource = DataModel5e.spellSources[source]?[name];
   }
 }

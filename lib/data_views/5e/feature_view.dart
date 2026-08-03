@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/feature_like.dart';
 import 'package:render_ttrpg_data/theme/text_style_extension.dart';
 import 'package:render_ttrpg_data/theme/text_styles.dart';
 
@@ -14,7 +14,7 @@ class FeatureView extends StatelessWidget {
     this.collapsible = false,
   });
 
-  final ClassFeature5e feature;
+  final FeatureLike feature;
   final bool card;
   final bool showTitle;
   final bool showDetailsInHeader;
@@ -30,7 +30,7 @@ class FeatureView extends StatelessWidget {
         ),
         Spacer(),
         Text(
-          "${feature.className} | LVL ${feature.level}",
+          feature.featureSource,
           style: TextTheme.of(context).bodyMedium?.withAlpha(200),
         ),
       ],
@@ -43,9 +43,7 @@ class FeatureView extends StatelessWidget {
               dense: true,
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               expandedAlignment: AlignmentGeometry.centerLeft,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
-              ),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
               collapsedShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.zero,
               ),

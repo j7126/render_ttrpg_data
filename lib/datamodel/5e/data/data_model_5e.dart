@@ -1,16 +1,20 @@
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/class/subclass.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/condition/condition.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_group.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_property.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_type.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/race/race.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_source.dart';
 
 class DataModel5e {
   // class
   static List<Class5e> classes = [];
+  static List<SubClass> subClasses = [];
   static List<ClassFeature5e> classFeatures = [];
 
   // items
@@ -26,5 +30,9 @@ class DataModel5e {
   static List<OptionalFeature> optionalFeatures = [];
 
   // spells
+  static Map<String, Map<String, SpellSource>> spellSources = {};
   static List<Spell> spells = [];
+
+  // races
+  static List<Race> races = [];
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:render_ttrpg_data/data_views/5e/condition_view.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/condition/condition.dart';
+import 'package:render_ttrpg_data/data_views/5e/race_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/race/race.dart';
 
-class ConditionsView extends StatefulWidget {
-  const ConditionsView({super.key});
+class RacesView extends StatefulWidget {
+  const RacesView({super.key});
 
   @override
-  State<ConditionsView> createState() => _ConditionsViewState();
+  State<RacesView> createState() => _RacesViewState();
 }
 
-class _ConditionsViewState extends State<ConditionsView> {
-  List<Condition> conditions = [];
+class _RacesViewState extends State<RacesView> {
+  List<Race> races = [];
 
   @override
   void initState() {
@@ -22,12 +22,12 @@ class _ConditionsViewState extends State<ConditionsView> {
   void search(String searchString) {
     setState(() {
       if (searchString.isEmpty) {
-        conditions = DataModel5e.conditions.toList();
+        races = DataModel5e.races.toList();
         return;
       }
 
       searchString = searchString.toLowerCase();
-      conditions = DataModel5e.conditions
+      races = DataModel5e.races
           .where((x) => x.searchCompare(searchString))
           .toList();
     });
@@ -71,7 +71,7 @@ class _ConditionsViewState extends State<ConditionsView> {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: conditions.length,
+            itemCount: races.length,
             itemExtent: 32,
             itemBuilder: (context, i) => Container(
               decoration: BoxDecoration(
@@ -88,10 +88,7 @@ class _ConditionsViewState extends State<ConditionsView> {
                             vertical: 16.0,
                             horizontal: 20.0,
                           ),
-                          child: ConditionView(
-                            condition: conditions[i],
-                            card: false,
-                          ),
+                          child: RaceView(race: races[i], card: false),
                         ),
                       );
                     },
@@ -105,10 +102,7 @@ class _ConditionsViewState extends State<ConditionsView> {
                           vertical: 4.0,
                           horizontal: 4.0,
                         ),
-                        child: Text(
-                          conditions[i].name,
-                          textAlign: TextAlign.center,
-                        ),
+                        child: Text(races[i].name, textAlign: TextAlign.center),
                       ),
                     ),
                     Expanded(
@@ -118,7 +112,7 @@ class _ConditionsViewState extends State<ConditionsView> {
                           horizontal: 4.0,
                         ),
                         child: Text(
-                          conditions[i].source,
+                          races[i].source,
                           textAlign: TextAlign.center,
                         ),
                       ),

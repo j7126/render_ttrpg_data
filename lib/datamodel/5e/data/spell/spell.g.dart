@@ -15,7 +15,7 @@ Spell _$SpellFromJson(Map<String, dynamic> json) => Spell(
       .toList(),
   srd: json['srd'],
   level: (json['level'] as num).toInt(),
-  school: json['school'] as String,
+  school: $enumDecode(_$SpellSchoolEnumMap, json['school']),
   time: (json['time'] as List<dynamic>)
       .map((e) => CastingTime.fromJson(e as Map<String, dynamic>))
       .toList(),
@@ -33,6 +33,9 @@ Spell _$SpellFromJson(Map<String, dynamic> json) => Spell(
           ?.map(FeatureEntry.fromJson)
           .toList() ??
       const [],
+  spellClassSource: json['spellClassSource'] == null
+      ? null
+      : SpellSource.fromJson(json['spellClassSource'] as Map<String, dynamic>),
 )..basicRules = json['basicRules'] as bool?;
 
 Map<String, dynamic> _$SpellToJson(Spell instance) => <String, dynamic>{
@@ -43,7 +46,7 @@ Map<String, dynamic> _$SpellToJson(Spell instance) => <String, dynamic>{
   'basicRules': instance.basicRules,
   'name': instance.name,
   'level': instance.level,
-  'school': instance.school,
+  'school': _$SpellSchoolEnumMap[instance.school]!,
   'time': instance.time.map((e) => e.toJson()).toList(),
   'range': instance.range.toJson(),
   'duration': instance.duration.map((e) => e.toJson()).toList(),
@@ -51,4 +54,16 @@ Map<String, dynamic> _$SpellToJson(Spell instance) => <String, dynamic>{
   'entriesHigherLevel': instance.entriesHigherLevel
       .map((e) => e.toJson())
       .toList(),
+  'spellClassSource': instance.spellClassSource?.toJson(),
+};
+
+const _$SpellSchoolEnumMap = {
+  SpellSchool.A: 'A',
+  SpellSchool.C: 'C',
+  SpellSchool.D: 'D',
+  SpellSchool.E: 'E',
+  SpellSchool.V: 'V',
+  SpellSchool.I: 'I',
+  SpellSchool.N: 'N',
+  SpellSchool.T: 'T',
 };
