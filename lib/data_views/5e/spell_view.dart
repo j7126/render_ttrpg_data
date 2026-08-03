@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_range.dart';
-import 'package:render_ttrpg_data/theme/text_styles.dart';
 import 'package:render_ttrpg_data/widgets/fixed_thumb_scroll_view.dart';
 
 class SpellView extends StatelessWidget {
