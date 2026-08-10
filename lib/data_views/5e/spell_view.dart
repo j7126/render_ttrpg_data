@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_range.dart';
+import 'package:render_ttrpg_data/util/int_extension.dart';
 import 'package:render_ttrpg_data/widgets/fixed_thumb_scroll_view.dart';
 
 class SpellView extends StatelessWidget {
@@ -18,15 +19,6 @@ class SpellView extends StatelessWidget {
   final bool outlined;
   final bool scrollable;
 
-  String ordinal(int number) => number >= 11 && number <= 13
-      ? "${number}th"
-      : switch (number % 10) {
-          1 => "${number}st",
-          2 => "${number}nd",
-          3 => "${number}rd",
-          _ => "${number}th",
-        };
-
   @override
   Widget build(BuildContext context) {
     var featureView = SizedBox(
@@ -38,7 +30,7 @@ class SpellView extends StatelessWidget {
           Text(
             spell.level == 0
                 ? "${spell.school.name.toLowerCase()} cantrip"
-                : "${ordinal(spell.level)}-level ${spell.school.name.toLowerCase()}",
+                : "${spell.level.ordinal()}-level ${spell.school.name.toLowerCase()}",
             style: TextStyle(fontStyle: FontStyle.italic),
           ),
           if (spell.time.isNotEmpty)
@@ -70,8 +62,7 @@ class SpellView extends StatelessWidget {
                   "Duration: ",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                for (var duration in spell.duration)
-                  Text(duration.type.name),
+                for (var duration in spell.duration) Text(duration.type.name),
               ],
             ),
           Divider(),

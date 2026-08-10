@@ -11,9 +11,11 @@ TableCell _$TableCellFromJson(Map<String, dynamic> json) => TableCell(
   roll: json['roll'] == null
       ? null
       : DiceRollCondition.fromJson(json['roll'] as Map<String, dynamic>),
+  intVal: (json['intVal'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$TableCellToJson(TableCell instance) => <String, dynamic>{
   'entry': instance.entry,
   'roll': instance.roll?.toJson(),
+  'intVal': instance.intVal,
 };

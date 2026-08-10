@@ -23,21 +23,22 @@ Class5e _$Class5eFromJson(Map<String, dynamic> json) =>
           _$AbilityEnumMap,
           json['spellcastingAbility'],
         ),
+        casterProgression: json['casterProgression'] as String?,
+        spellsKnownProgression:
+            (json['spellsKnownProgression'] as List<dynamic>?)
+                ?.map((e) => (e as num).toInt())
+                .toList(),
+        startingProficiencies: json['startingProficiencies'] == null
+            ? null
+            : ClassStartingProficiencies.fromJson(
+                json['startingProficiencies'] as Map<String, dynamic>,
+              ),
+        preparedSpells: json['preparedSpells'] as String?,
       )
       ..basicRules = json['basicRules'] as bool?
-      ..casterProgression = json['casterProgression'] as String?
       ..cantripProgression = (json['cantripProgression'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
-          .toList()
-      ..spellsKnownProgression =
-          (json['spellsKnownProgression'] as List<dynamic>?)
-              ?.map((e) => (e as num).toInt())
-              .toList()
-      ..startingProficiencies = json['startingProficiencies'] == null
-          ? null
-          : ClassStartingProficiencies.fromJson(
-              json['startingProficiencies'] as Map<String, dynamic>,
-            );
+          .toList();
 
 Map<String, dynamic> _$Class5eToJson(Class5e instance) => <String, dynamic>{
   'source': instance.source,
@@ -53,6 +54,7 @@ Map<String, dynamic> _$Class5eToJson(Class5e instance) => <String, dynamic>{
   'cantripProgression': instance.cantripProgression,
   'spellsKnownProgression': instance.spellsKnownProgression,
   'startingProficiencies': instance.startingProficiencies?.toJson(),
+  'preparedSpells': instance.preparedSpells,
 };
 
 const _$AbilityEnumMap = {

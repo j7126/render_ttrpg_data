@@ -30,6 +30,9 @@ FeatureEntry _$FeatureEntryFromJson(Map<String, dynamic> json) => FeatureEntry(
   optionalfeature: json['optionalfeature'] as String?,
   items: (json['items'] as List<dynamic>?)?.map(FeatureEntry.fromJson).toList(),
   subclassFeature: json['subclassFeature'] as String?,
+  rowsSpellProgression: (json['rowsSpellProgression'] as List<dynamic>?)
+      ?.map((e) => (e as List<dynamic>).map((e) => (e as num).toInt()).toList())
+      .toList(),
 );
 
 Map<String, dynamic> _$FeatureEntryToJson(
@@ -48,6 +51,7 @@ Map<String, dynamic> _$FeatureEntryToJson(
   'subclassFeature': instance.subclassFeature,
   'entries': instance.entries?.map((e) => e.toJson()).toList(),
   'items': instance.items?.map((e) => e.toJson()).toList(),
+  'rowsSpellProgression': instance.rowsSpellProgression,
   'referencedFeature': instance.referencedFeature?.toJson(),
   'referencedOptionalFeature': instance.referencedOptionalFeature?.toJson(),
 };

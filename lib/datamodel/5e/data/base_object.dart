@@ -28,3 +28,7 @@ abstract class BaseObject {
   dynamic srd;
   bool? basicRules;
 }
+
+mixin WithReference {
+  abstract final String refString;
+}

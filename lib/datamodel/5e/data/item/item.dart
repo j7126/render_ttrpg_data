@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/dice.dart';
@@ -10,7 +11,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/item/weapon/weapon_category.
 part 'item.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Item extends ItemLike {
+class Item extends ItemLike with WithReference {
   Item({
     required super.name,
     required super.source,
@@ -40,6 +41,9 @@ class Item extends ItemLike {
 
   List<FeatureEntry> entries;
   List<FeatureEntry> additionalEntries;
+
+  @override
+  String get refString => "{@item $name|$source}";
 
   @JsonKey(includeFromJson: false, includeToJson: true)
   List<ItemProperty> itemProperties = [];

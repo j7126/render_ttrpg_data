@@ -4,7 +4,7 @@ import 'package:render_ttrpg_data/data_views/5e/condition_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
-import 'package:render_ttrpg_data/widgets/link_with_content_tootlip.dart';
+import 'package:render_ttrpg_data/widgets/link_with_content_tooltip.dart';
 
 class TextView extends StatefulWidget {
   const TextView(this.text, {super.key, this.style});
@@ -21,7 +21,9 @@ class _TextViewState extends State<TextView> {
     if (type == "i" || type == "italic") {
       return TextSpan(
         text: content,
-        style: TextStyle(fontStyle: FontStyle.italic),
+        style:
+            widget.style?.copyWith(fontStyle: FontStyle.italic) ??
+            TextStyle(fontStyle: FontStyle.italic),
       );
     } else if (type == "dc") {
       return TextSpan(text: "DC $content");
@@ -29,10 +31,12 @@ class _TextViewState extends State<TextView> {
       // TODO: implement dice rendering
       return TextSpan(
         text: content,
-        style: TextStyle(
-          color: Colors.blue,
-          decoration: TextDecoration.underline,
-        ),
+        style:
+            widget.style?.copyWith(
+              color: Colors.blue,
+              decoration: TextDecoration.underline,
+            ) ??
+            TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
       );
     } else if (type == "item") {
       var contentParts = content.split("|");
@@ -48,16 +52,22 @@ class _TextViewState extends State<TextView> {
       return item == null
           ? TextSpan(
               text: "$itemName (Unknown Item)",
-              style: TextStyle(
-                color: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.color?.withAlpha(150),
-              ),
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                  ),
             )
           : WidgetSpan(
               alignment: PlaceholderAlignment.baseline,
               baseline: TextBaseline.alphabetic,
-              child: LinkWithContentTootlip(
+              child: LinkWithContentTooltip(
                 tooltipView: ItemView(
                   item: item,
                   card: true,
@@ -66,6 +76,7 @@ class _TextViewState extends State<TextView> {
                 ),
                 contentView: ItemView(item: item, card: false),
                 text: contentParts.length > 2 ? contentParts[2] : itemName,
+                style: widget.style,
               ),
             );
     } else if (type == "condition") {
@@ -75,16 +86,22 @@ class _TextViewState extends State<TextView> {
       return condition == null
           ? TextSpan(
               text: "$content (Unknown Condition)",
-              style: TextStyle(
-                color: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.color?.withAlpha(150),
-              ),
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                  ),
             )
           : WidgetSpan(
               alignment: PlaceholderAlignment.baseline,
               baseline: TextBaseline.alphabetic,
-              child: LinkWithContentTootlip(
+              child: LinkWithContentTooltip(
                 tooltipView: ConditionView(
                   condition: condition,
                   card: true,
@@ -93,6 +110,7 @@ class _TextViewState extends State<TextView> {
                 ),
                 contentView: ConditionView(condition: condition, card: false),
                 text: content,
+                style: widget.style,
               ),
             );
     } else if (type == "spell") {
@@ -102,16 +120,22 @@ class _TextViewState extends State<TextView> {
       return spell == null
           ? TextSpan(
               text: "$content (Unknown Spell)",
-              style: TextStyle(
-                color: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.color?.withAlpha(150),
-              ),
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                  ),
             )
           : WidgetSpan(
               alignment: PlaceholderAlignment.baseline,
               baseline: TextBaseline.alphabetic,
-              child: LinkWithContentTootlip(
+              child: LinkWithContentTooltip(
                 tooltipView: SpellView(
                   spell: spell,
                   card: true,
@@ -119,13 +143,16 @@ class _TextViewState extends State<TextView> {
                   scrollable: true,
                 ),
                 contentView: SpellView(spell: spell, card: false),
-                text: content,
+                text: spell.name,
+                style: widget.style,
               ),
             );
     } else {
       return TextSpan(
         text: "${type ?? ""}: $content",
-        style: TextStyle(color: Colors.red),
+        style:
+            widget.style?.copyWith(color: Colors.red) ??
+            TextStyle(color: Colors.red),
       );
     }
   }

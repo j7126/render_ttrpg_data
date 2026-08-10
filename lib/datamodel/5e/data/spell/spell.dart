@@ -12,7 +12,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_source.dart';
 part 'spell.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Spell extends NamedBaseObject {
+class Spell extends NamedBaseObject with WithReference {
   Spell({
     required super.name,
     required super.source,
@@ -40,6 +40,9 @@ class Spell extends NamedBaseObject {
 
   SpellSource? spellClassSource;
 
+  @override
+  String get refString => "{@spell $name|$source}";
+
   factory Spell.fromJson(Map<String, dynamic> json) => _$SpellFromJson(json);
 
   Map<String, dynamic> toJson() => _$SpellToJson(this);
@@ -50,8 +53,11 @@ class Spell extends NamedBaseObject {
   }
 
   bool refCompare(String searchString) {
-    return name.toLowerCase() == searchString ||
-        (srd is String && srd.toLowerCase() == searchString);
+    var splitElements = searchString.split("|");
+    return splitElements.isNotEmpty &&
+        (name.toLowerCase() == splitElements[0] ||
+            (srd is String && srd.toLowerCase() == splitElements[0])) &&
+        (splitElements.length == 1 || source.toLowerCase() == splitElements[1].toLowerCase());
   }
 
   void hydrateReferences() {

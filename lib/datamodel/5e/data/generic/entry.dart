@@ -23,6 +23,7 @@ class FeatureEntry {
     this.optionalfeature,
     this.items,
     this.subclassFeature,
+    this.rowsSpellProgression,
   });
 
   FeatureEntryType type;
@@ -38,6 +39,7 @@ class FeatureEntry {
   String? subclassFeature;
   List<FeatureEntry>? entries;
   List<FeatureEntry>? items;
+  List<List<int>>? rowsSpellProgression;
 
   @JsonKey(includeFromJson: false, includeToJson: true)
   ClassFeature5e? referencedFeature;

@@ -1,30 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/widgets/tooltip_scope.dart';
 
-class LinkWithContentTootlip extends StatelessWidget {
-  const LinkWithContentTootlip({
+class LinkWithContentTooltip extends StatelessWidget {
+  const LinkWithContentTooltip({
     super.key,
     required this.tooltipView,
     required this.contentView,
     required this.text,
+    required this.style,
+    this.fittedBox = false,
+    this.waitDuration = Duration.zero,
   });
 
   final Widget tooltipView;
   final Widget contentView;
   final String text;
+  final TextStyle? style;
+  final bool fittedBox;
+  final Duration waitDuration;
 
   @override
   Widget build(BuildContext context) {
-    var child = Text(
+    Widget child = Text(
       text,
-      style: TextStyle(color: ColorScheme.of(context).primary),
+      style:
+          style?.copyWith(color: ColorScheme.of(context).primary) ??
+          TextStyle(color: ColorScheme.of(context).primary),
     );
+    if (fittedBox) {
+      child = FittedBox(fit: BoxFit.scaleDown, child: child);
+    }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: TooltipScope.isInTooltip(context)
           ? child
           : Tooltip(
               ignorePointer: false,
+              waitDuration: waitDuration,
+              decoration: BoxDecoration(color: Colors.transparent),
+              enableTapToDismiss: false,
               richMessage: WidgetSpan(
                 child: TooltipScope(
                   child: Container(
@@ -36,7 +50,6 @@ class LinkWithContentTootlip extends StatelessWidget {
                   ),
                 ),
               ),
-              decoration: BoxDecoration(color: Colors.transparent),
               child: GestureDetector(
                 onTapDown: (details) {
                   showDialog(
