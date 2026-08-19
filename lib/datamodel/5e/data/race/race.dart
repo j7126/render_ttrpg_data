@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/creature_size.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';

@@ -35,12 +35,23 @@ Class5e _$Class5eFromJson(Map<String, dynamic> json) =>
               ),
         preparedSpells: json['preparedSpells'] as String?,
       )
+      ..optionalfeatureProgression =
+          (json['optionalfeatureProgression'] as List<dynamic>?)
+              ?.map(
+                (e) => OptionalFeatureProgression.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
+              .toList()
       ..basicRules = json['basicRules'] as bool?
       ..cantripProgression = (json['cantripProgression'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList();
 
 Map<String, dynamic> _$Class5eToJson(Class5e instance) => <String, dynamic>{
+  'optionalfeatureProgression': instance.optionalfeatureProgression
+      ?.map((e) => e.toJson())
+      .toList(),
   'source': instance.source,
   'page': instance.page,
   'otherSources': instance.otherSources?.map((e) => e.toJson()).toList(),

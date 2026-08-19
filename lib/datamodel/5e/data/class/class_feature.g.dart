@@ -24,10 +24,13 @@ ClassFeature5e _$ClassFeature5eFromJson(Map<String, dynamic> json) =>
                 ?.map(FeatureEntry.fromJson)
                 .toList() ??
             const [],
+        subclassShortName: json['subclassShortName'] as String?,
+        subclassSource: json['subclassSource'] as String?,
       )
       ..basicRules = json['basicRules'] as bool?
-      ..subclassShortName = json['subclassShortName'] as String?
-      ..subclassSource = json['subclassSource'] as String?;
+      ..additionalSpells = (json['additionalSpells'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
+          .toList();
 
 Map<String, dynamic> _$ClassFeature5eToJson(ClassFeature5e instance) =>
     <String, dynamic>{
@@ -37,6 +40,7 @@ Map<String, dynamic> _$ClassFeature5eToJson(ClassFeature5e instance) =>
       'srd': instance.srd,
       'basicRules': instance.basicRules,
       'name': instance.name,
+      'additionalSpells': instance.additionalSpells,
       'header': instance.header,
       'entries': instance.entries.map((e) => e.toJson()).toList(),
       'className': instance.className,

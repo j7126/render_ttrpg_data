@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
@@ -12,7 +12,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_source.dart';
 part 'spell.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Spell extends NamedBaseObject with WithReference {
+class Spell extends NamedBaseObject with ReferenceMixin {
   Spell({
     required super.name,
     required super.source,

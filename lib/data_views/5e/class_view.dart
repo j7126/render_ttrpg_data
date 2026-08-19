@@ -45,7 +45,7 @@ class ClassView extends StatelessWidget {
               if (level == null || feat.level <= level!)
                 FeatureView(feature: feat, card: card),
               if (subClass != null &&
-                  class5e.gainSubClassFeatures.any(feat.matchesReference))
+                  class5e.gainSubClassFeatures.any(feat.refCompare))
                 for (var subFeat in subClass.subclassFeatures)
                   if (subFeat.level == feat.level)
                     FeatureView(feature: subFeat, card: card),

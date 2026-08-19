@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/ability.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/table_cell.dart';
 
@@ -49,18 +48,11 @@ class FeatureEntry {
 
   void hydrateReferences() {
     if (type == FeatureEntryType.refClassFeature) {
-      referencedFeature = ClassFeature5e.fromReference(
-        DataModel5e.classFeatures,
-        classFeature,
-      );
+      referencedFeature = ClassFeature5e.fromReference(classFeature);
     } else if (type == FeatureEntryType.refSubclassFeature) {
-      referencedFeature = ClassFeature5e.fromReference(
-        DataModel5e.classFeatures,
-        subclassFeature,
-      );
+      referencedFeature = ClassFeature5e.fromReference(subclassFeature);
     } else if (type == FeatureEntryType.refOptionalfeature) {
       referencedOptionalFeature = OptionalFeature.fromReference(
-        DataModel5e.optionalFeatures,
         optionalfeature,
       );
     }

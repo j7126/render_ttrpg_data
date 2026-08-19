@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:render_ttrpg_data/data_views/5e/races_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature_like.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/feature_like.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 part 'race_feature.g.dart';
@@ -23,7 +24,10 @@ class RaceFeature extends FeatureLike {
   String raceSource;
 
   @override
-  String get featureSource => raceName;
+  String get sourceLabel => raceName;
+
+  @override
+  String get refString => "{@raceFeature $name|$source|$raceName|$raceSource}";
 
   @override
   int get order => 0;

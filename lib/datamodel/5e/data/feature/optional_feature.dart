@@ -1,13 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/base_object.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 part 'optional_feature.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class OptionalFeature extends NamedBaseObject {
+class OptionalFeature extends NamedBaseObject with ReferenceMixin {
   OptionalFeature({
     required super.name,
     required super.source,
@@ -21,24 +22,22 @@ class OptionalFeature extends NamedBaseObject {
   List<String> featureType;
   List<FeatureEntry> entries;
 
-  static OptionalFeature? fromReference(
-    List<OptionalFeature>? features,
-    String? reference,
-  ) {
-    var splitRef = reference?.split("|");
+  @override
+  String get refString => "{@optfeature $name|$source}";
 
-    if (features == null ||
-        splitRef == null ||
-        splitRef.isEmpty ||
-        splitRef[0].isEmpty) {
+  static OptionalFeature? fromReference(String? reference) {
+    var splitRef = reference?.toLowerCase().split("|");
+
+    if (splitRef == null || splitRef.isEmpty || splitRef[0].isEmpty) {
       return null;
     }
 
     var name = splitRef[0];
     var source = splitRef.length > 1 ? splitRef[1] : "";
-    return features.firstWhereOrNull(
+    return DataModel5e.optionalFeatures.firstWhereOrNull(
       (OptionalFeature x) =>
-          (x.name == name) && (source.isEmpty || x.source == source),
+          (x.name.toLowerCase() == name) &&
+          (source.isEmpty || x.source.toLowerCase() == source),
     );
   }
 

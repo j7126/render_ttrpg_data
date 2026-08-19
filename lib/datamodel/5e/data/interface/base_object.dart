@@ -29,6 +29,6 @@ abstract class BaseObject {
   bool? basicRules;
 }
 
-mixin WithReference {
+mixin ReferenceMixin {
   abstract final String refString;
 }

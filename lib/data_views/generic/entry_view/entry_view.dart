@@ -11,15 +11,28 @@ import 'package:render_ttrpg_data/data_views/generic/entry_view/text_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class EntryView extends StatelessWidget {
-  const EntryView({super.key, required this.entry, this.header = 1});
+  const EntryView({
+    super.key,
+    required this.entry,
+    this.header = 1,
+    this.hiddenEntryTypes = const {},
+  });
 
   final FeatureEntry entry;
   final int header;
+  final Set<FeatureEntryType> hiddenEntryTypes;
 
   @override
   Widget build(BuildContext context) {
+    if (hiddenEntryTypes.contains(entry.type)) {
+      return Container();
+    }
     return switch (entry.type) {
-      FeatureEntryType.entries => EntriesView(entry: entry, header: header),
+      FeatureEntryType.entries => EntriesView(
+        entry: entry,
+        header: header,
+        hiddenEntryTypes: hiddenEntryTypes,
+      ),
       FeatureEntryType.list => EntryListView(entry: entry),
       FeatureEntryType.item => Container(
         width: 200,

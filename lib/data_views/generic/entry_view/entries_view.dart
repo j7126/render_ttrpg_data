@@ -4,10 +4,16 @@ import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/theme/text_styles.dart';
 
 class EntriesView extends StatelessWidget {
-  const EntriesView({super.key, required this.entry, required this.header});
+  const EntriesView({
+    super.key,
+    required this.entry,
+    required this.header,
+    this.hiddenEntryTypes = const {},
+  });
 
   final FeatureEntry entry;
   final int header;
+  final Set<FeatureEntryType> hiddenEntryTypes;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +33,9 @@ class EntriesView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                for (var entry in entry.entries ?? [])
-                  EntryView(entry: entry, header: header + 1),
+                for (var entry in entry.entries ?? <FeatureEntry>[])
+                  if (!hiddenEntryTypes.contains(entry.type))
+                    EntryView(entry: entry, header: header + 1),
               ],
             ),
           ),
