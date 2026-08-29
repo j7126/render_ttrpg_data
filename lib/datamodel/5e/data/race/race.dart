@@ -1,9 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/ability_bonus/ability_bonus_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/creature_size.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/race/race_ability.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/ability_bonus/ability_bonus.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/race/race_age.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/race/race_height_weight.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/speed.dart';
@@ -11,7 +12,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/speed.dart';
 part 'race.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Race extends NamedBaseObject {
+class Race extends NamedBaseObject with ReferenceMixin, AbilityBonusMixin {
   Race({
     required super.name,
     required super.source,
@@ -21,20 +22,23 @@ class Race extends NamedBaseObject {
     this.size = const [],
     required this.speed,
     this.entries = const [],
-    this.ability = const [],
     this.creatureTypes = const [],
     this.heightAndWeight,
     this.age,
+    this.lineage,
   });
 
   List<CreatureSize> size;
   Speed speed;
   List<FeatureEntry> entries;
-  List<RaceAbility> ability;
   List<String> creatureTypes;
   RaceHeightWeight? heightAndWeight;
   RaceAge? age;
   int? darkvision;
+  dynamic lineage;
+
+  @override
+  String get refString => "{@race $name|$source}";
 
   factory Race.fromJson(Map<String, dynamic> json) => _$RaceFromJson(json);
 
@@ -43,5 +47,14 @@ class Race extends NamedBaseObject {
   bool searchCompare(String searchString) {
     return name.toLowerCase().contains(searchString) ||
         (srd is String && srd.toLowerCase().contains(searchString));
+  }
+
+  bool refCompare(String searchString) {
+    var splitElements = searchString.split("|");
+    return splitElements.isNotEmpty &&
+        (name.toLowerCase() == splitElements[0] ||
+            (srd is String && srd.toLowerCase() == splitElements[0])) &&
+        (splitElements.length == 1 ||
+            source.toLowerCase() == splitElements[1].toLowerCase());
   }
 }

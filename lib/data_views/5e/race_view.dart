@@ -27,6 +27,18 @@ class RaceView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(race.name, style: TextTheme.of(context).headlineSmall),
+          if (race.ability?.firstOrNull != null)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  "Ability Scores: ",
+                  style: TextStyles.of(context).getHeadline(2),
+                ),
+                Text(race.ability!.first.getDisplayText()),
+              ],
+            ),
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,

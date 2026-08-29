@@ -26,11 +26,6 @@ Race _$RaceFromJson(Map<String, dynamic> json) =>
                 ?.map(FeatureEntry.fromJson)
                 .toList() ??
             const [],
-        ability:
-            (json['ability'] as List<dynamic>?)
-                ?.map((e) => RaceAbility.fromJson(e as Map<String, dynamic>))
-                .toList() ??
-            const [],
         creatureTypes:
             (json['creatureTypes'] as List<dynamic>?)
                 ?.map((e) => e as String)
@@ -44,8 +39,12 @@ Race _$RaceFromJson(Map<String, dynamic> json) =>
         age: json['age'] == null
             ? null
             : RaceAge.fromJson(json['age'] as Map<String, dynamic>),
+        lineage: json['lineage'],
       )
       ..basicRules = json['basicRules'] as bool?
+      ..ability = (json['ability'] as List<dynamic>?)
+          ?.map((e) => AbilityBonus.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..darkvision = (json['darkvision'] as num?)?.toInt();
 
 Map<String, dynamic> _$RaceToJson(Race instance) => <String, dynamic>{
@@ -55,14 +54,15 @@ Map<String, dynamic> _$RaceToJson(Race instance) => <String, dynamic>{
   'srd': instance.srd,
   'basicRules': instance.basicRules,
   'name': instance.name,
+  'ability': instance.ability?.map((e) => e.toJson()).toList(),
   'size': instance.size.map((e) => _$CreatureSizeEnumMap[e]!).toList(),
   'speed': instance.speed.toJson(),
   'entries': instance.entries.map((e) => e.toJson()).toList(),
-  'ability': instance.ability.map((e) => e.toJson()).toList(),
   'creatureTypes': instance.creatureTypes,
   'heightAndWeight': instance.heightAndWeight?.toJson(),
   'age': instance.age?.toJson(),
   'darkvision': instance.darkvision,
+  'lineage': instance.lineage,
 };
 
 const _$CreatureSizeEnumMap = {

@@ -4,12 +4,18 @@ import 'package:render_ttrpg_data/data_views/5e/condition_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/feature_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/optional_feature_view.dart';
+import 'package:render_ttrpg_data/data_views/5e/race_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/subclass_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/class/subclass.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/condition/condition.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/item/item_like.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/race/race.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 import 'package:render_ttrpg_data/widgets/link_with_content_tooltip.dart';
 
 class TextView extends StatefulWidget {
@@ -18,11 +24,13 @@ class TextView extends StatefulWidget {
     super.key,
     this.style,
     this.hiddenEntryTypes = const {},
+    this.hintEntities = const [],
   });
 
   final String text;
   final TextStyle? style;
   final Set<FeatureEntryType> hiddenEntryTypes;
+  final List<dynamic> hintEntities;
 
   @override
   State<TextView> createState() => _TextViewState();
@@ -54,7 +62,12 @@ class _TextViewState extends State<TextView> {
       var contentParts = content.split("|");
       var itemName = contentParts[0];
       var itemSource = contentParts.length > 1 ? contentParts[1] : null;
-      var item = [...DataModel5e.items, ...DataModel5e.itemGroups]
+
+      var item = widget.hintEntities
+          .map((x) => x is ItemLike ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.items)
+          .followedBy(DataModel5e.itemGroups)
           .firstWhereOrNull(
             (x) =>
                 x.name.toLowerCase() == itemName.toLowerCase() &&
@@ -66,14 +79,12 @@ class _TextViewState extends State<TextView> {
               text: "$itemName (Unknown Item)",
               style:
                   widget.style?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ) ??
                   TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ),
             )
           : WidgetSpan(
@@ -92,22 +103,22 @@ class _TextViewState extends State<TextView> {
               ),
             );
     } else if (type == "condition") {
-      var condition = DataModel5e.conditions.firstWhereOrNull(
-        (x) => x.refCompare(content.toLowerCase()),
-      );
+      var condition = widget.hintEntities
+          .map((x) => x is Condition ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.conditions)
+          .firstWhereOrNull((x) => x.refCompare(content.toLowerCase()));
       return condition == null
           ? TextSpan(
               text: "$content (Unknown Condition)",
               style:
                   widget.style?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ) ??
                   TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ),
             )
           : WidgetSpan(
@@ -126,22 +137,22 @@ class _TextViewState extends State<TextView> {
               ),
             );
     } else if (type == "spell") {
-      var spell = DataModel5e.spells.firstWhereOrNull(
-        (x) => x.refCompare(content.toLowerCase()),
-      );
+      var spell = widget.hintEntities
+          .map((x) => x is Spell ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.spells)
+          .firstWhereOrNull((x) => x.refCompare(content.toLowerCase()));
       return spell == null
           ? TextSpan(
               text: "$content (Unknown Spell)",
               style:
                   widget.style?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ) ??
                   TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ),
             )
           : WidgetSpan(
@@ -160,22 +171,22 @@ class _TextViewState extends State<TextView> {
               ),
             );
     } else if (type == "subclass") {
-      var subclass = DataModel5e.subClasses.firstWhereOrNull(
-        (x) => x.refCompare(content.toLowerCase()),
-      );
+      var subclass = widget.hintEntities
+          .map((x) => x is SubClass ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.subClasses)
+          .firstWhereOrNull((x) => x.refCompare(content.toLowerCase()));
       return subclass == null
           ? TextSpan(
               text: "${content.split("|").first} (Unknown Subclass)",
               style:
                   widget.style?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ) ??
                   TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ),
             )
           : WidgetSpan(
@@ -200,14 +211,12 @@ class _TextViewState extends State<TextView> {
               text: "${content.split("|").first} (Unknown Class Feature)",
               style:
                   widget.style?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ) ??
                   TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ),
             )
           : WidgetSpan(
@@ -237,14 +246,12 @@ class _TextViewState extends State<TextView> {
               text: "${content.split("|").first} (Unknown Class Feature)",
               style:
                   widget.style?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ) ??
                   TextStyle(
-                    color: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.color?.withAlpha(150),
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
                   ),
             )
           : WidgetSpan(
@@ -259,6 +266,43 @@ class _TextViewState extends State<TextView> {
                 ),
                 contentView: OptionalFeatureView(feature: feat, card: false),
                 text: feat.name,
+                style: widget.style,
+              ),
+            );
+    } else if (type == "race") {
+      var parts = content.split("|");
+      var race = widget.hintEntities
+          .map((x) => x is Race ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.races)
+          .firstWhereOrNull((x) => x.refCompare(content.toLowerCase()));
+      return race == null
+          ? TextSpan(
+              text: "$content (Unknown Race)",
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ),
+            )
+          : WidgetSpan(
+              alignment: PlaceholderAlignment.baseline,
+              baseline: TextBaseline.alphabetic,
+              child: LinkWithContentTooltip(
+                tooltipView: RaceView(
+                  race: race,
+                  card: true,
+                  outlined: true,
+                  scrollable: true,
+                ),
+                contentView: RaceView(race: race, card: false),
+                text: parts.length == 3 && parts[3].isNotEmpty
+                    ? parts[3]
+                    : race.name,
                 style: widget.style,
               ),
             );
