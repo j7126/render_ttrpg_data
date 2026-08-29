@@ -6,15 +6,16 @@ import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/optional_feature_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/race_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
+import 'package:render_ttrpg_data/data_views/5e/sub_race_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/subclass_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/subclass.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/condition/condition.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_like.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/race/race.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/race/subrace/sub_race.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 import 'package:render_ttrpg_data/widgets/link_with_content_tooltip.dart';
 
@@ -240,7 +241,9 @@ class _TextViewState extends State<TextView> {
               ),
             );
     } else if (type == "optfeature") {
-      var feat = OptionalFeature.fromReference(content);
+      var feat = DataModel5e.optionalFeatures.firstWhereOrNull(
+        (x) => x.refCompare(content),
+      );
       return feat == null
           ? TextSpan(
               text: "${content.split("|").first} (Unknown Class Feature)",
@@ -303,6 +306,45 @@ class _TextViewState extends State<TextView> {
                 text: parts.length == 3 && parts[3].isNotEmpty
                     ? parts[3]
                     : race.name,
+                style: widget.style,
+              ),
+            );
+    } else if (type == "subrace") {
+      var parts = content.split("|");
+      var subRace = widget.hintEntities
+          .map((x) => x is SubRace ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.subRaces)
+          .firstWhereOrNull(
+            (x) => x.refCompare(content.toLowerCase(), preSplitParts: parts),
+          );
+      return subRace == null
+          ? TextSpan(
+              text: "$content (Unknown Sub Race)",
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ),
+            )
+          : WidgetSpan(
+              alignment: PlaceholderAlignment.baseline,
+              baseline: TextBaseline.alphabetic,
+              child: LinkWithContentTooltip(
+                tooltipView: SubRaceView(
+                  subRace: subRace,
+                  card: true,
+                  outlined: true,
+                  scrollable: true,
+                ),
+                contentView: SubRaceView(subRace: subRace, card: false),
+                text: subRace.name == null
+                    ? subRace.raceName
+                    : "${subRace.raceName} (${subRace.name})",
                 style: widget.style,
               ),
             );

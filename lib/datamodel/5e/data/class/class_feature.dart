@@ -37,26 +37,30 @@ class ClassFeature5e extends FeatureLike with AdditionalSpellsMixin {
       : "$className | LVL $level";
 
   @override
-  String get refString => subclassShortName != null && subclassSource != null
-      ? "{@subclassFeature $name|$className|$source|$subclassShortName|$subclassSource|$level}"
-      : "{@classFeature $name|$className|$source|$level}";
+  String get refType => subclassShortName != null && subclassSource != null
+      ? "subclassFeature"
+      : "classFeature";
+  @override
+  String get refStringParts =>
+      subclassShortName != null && subclassSource != null
+      ? "$name|$className|$source|$subclassShortName|$subclassSource|$level"
+      : "$name|$className|$source|$level";
 
   @override
   int get order => level;
 
-  bool refCompare(String searchString) {
-    var splitRef = searchString.toLowerCase().split("|");
-
-    if (splitRef.length != 4 && splitRef.length != 6) {
+  @override
+  bool refCompareImpl(List<String> parts) {
+    if (parts.length != 4 && parts.length != 6) {
       return false;
     }
 
-    var name = splitRef[0];
-    var className = splitRef[1];
-    var source = splitRef[2];
-    var level = int.tryParse(splitRef[splitRef.length == 4 ? 3 : 5]);
-    var subclassShortName = splitRef.length == 4 ? null : splitRef[3];
-    var subclassSource = splitRef.length == 4 ? null : splitRef[4];
+    var name = parts[0];
+    var className = parts[1];
+    var source = parts[2];
+    var level = int.tryParse(parts[parts.length == 4 ? 3 : 5]);
+    var subclassShortName = parts.length == 4 ? null : parts[3];
+    var subclassSource = parts.length == 4 ? null : parts[4];
     return (name.isEmpty || this.name.toLowerCase() == name) &&
         (className.isEmpty || this.className.toLowerCase() == className) &&
         (source.isEmpty || this.source.toLowerCase() == source) &&

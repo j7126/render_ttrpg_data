@@ -7,6 +7,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/class/starting_proficiency/s
 import 'package:render_ttrpg_data/datamodel/5e/data/dice.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/optional_feature_progression_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/optional_feature_progression.dart';
 
 part 'class.g.dart';
@@ -39,7 +40,9 @@ class Class5e extends NamedBaseObject
   String? preparedSpells;
 
   @override
-  String get refString => "{@class $name|$source}";
+  String get refType => "class";
+  @override
+  String get refStringParts => "$name|$source";
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<FeatureEntry>? classTableGroups;
@@ -49,6 +52,12 @@ class Class5e extends NamedBaseObject
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   List<String> gainSubClassFeatures = [];
+
+  @override
+  bool refCompareImpl(List<String> parts) {
+    return (parts[0].toLowerCase() == name.toLowerCase()) &&
+        (parts.length > 1 && parts[1].toLowerCase() == source.toLowerCase());
+  }
 
   factory Class5e.fromJson(Map<String, dynamic> json) {
     var result = _$Class5eFromJson(json);

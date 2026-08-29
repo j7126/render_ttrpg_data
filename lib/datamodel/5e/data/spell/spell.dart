@@ -3,6 +3,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/casting_time.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_duration.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_range.dart';
@@ -41,7 +42,9 @@ class Spell extends NamedBaseObject with ReferenceMixin {
   SpellSource? spellClassSource;
 
   @override
-  String get refString => "{@spell $name|$source}";
+  String get refType => "spell";
+  @override
+  String get refStringParts => "$name|$source";
 
   factory Spell.fromJson(Map<String, dynamic> json) => _$SpellFromJson(json);
 
@@ -52,12 +55,12 @@ class Spell extends NamedBaseObject with ReferenceMixin {
         (srd is String && srd.toLowerCase().contains(searchString));
   }
 
-  bool refCompare(String searchString) {
-    var splitElements = searchString.split("|");
-    return splitElements.isNotEmpty &&
-        (name.toLowerCase() == splitElements[0] ||
-            (srd is String && srd.toLowerCase() == splitElements[0])) &&
-        (splitElements.length == 1 || source.toLowerCase() == splitElements[1].toLowerCase());
+  @override
+  bool refCompareImpl(List<String> parts) {
+    return parts.isNotEmpty &&
+        (name.toLowerCase() == parts[0] ||
+            (srd is String && srd.toLowerCase() == parts[0])) &&
+        (parts.length == 1 || source.toLowerCase() == parts[1].toLowerCase());
   }
 
   void hydrateReferences() {

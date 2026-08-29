@@ -26,10 +26,23 @@ class RaceFeature extends FeatureLike {
   String get sourceLabel => raceName;
 
   @override
-  String get refString => "{@raceFeature $name|$source|$raceName|$raceSource}";
+  String get refType => "raceFeature";
+  @override
+  String get refStringParts => "$name|$source|$raceName|$raceSource";
 
   @override
   int get order => 0;
+
+  @override
+  bool refCompareImpl(List<String> parts) {
+    if (parts.length != 4) {
+      return false;
+    }
+    return (parts[0].toLowerCase() == name.toLowerCase()) &&
+        (parts[1].toLowerCase() == source.toLowerCase()) &&
+        (parts[2].toLowerCase() == raceName.toLowerCase()) &&
+        (parts[3].toLowerCase() == raceSource.toLowerCase());
+  }
 
   factory RaceFeature.fromJson(Map<String, dynamic> json) =>
       _$RaceFeatureFromJson(json);

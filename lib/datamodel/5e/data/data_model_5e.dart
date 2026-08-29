@@ -8,6 +8,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/item/item_group.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_property.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_type.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/race/race.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/race/subrace/sub_race.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_source.dart';
 
@@ -35,4 +36,5 @@ class DataModel5e {
 
   // races
   static List<Race> races = [];
+  static List<SubRace> subRaces = [];
 }

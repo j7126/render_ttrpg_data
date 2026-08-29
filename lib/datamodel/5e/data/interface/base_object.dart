@@ -1,6 +1,6 @@
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 
-abstract class NamedBaseObject extends BaseObject {
+abstract class NamedBaseObject extends BaseObject with VariableNameMixin {
   NamedBaseObject({
     required this.name,
     required super.source,
@@ -11,6 +11,13 @@ abstract class NamedBaseObject extends BaseObject {
   });
 
   String name;
+
+  @override
+  String get variableName => name;
+}
+
+mixin VariableNameMixin on BaseObject {
+  abstract final String variableName;
 }
 
 abstract class BaseObject {
@@ -27,8 +34,4 @@ abstract class BaseObject {
   List<BookSource>? otherSources;
   dynamic srd;
   bool? basicRules;
-}
-
-mixin ReferenceMixin {
-  abstract final String refString;
 }

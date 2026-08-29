@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/dice.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_like.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/item_property.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/item/weapon/weapon_category.dart';
@@ -43,7 +43,9 @@ class Item extends ItemLike with ReferenceMixin {
   List<FeatureEntry> additionalEntries;
 
   @override
-  String get refString => "{@item $name|$source}";
+  String get refType => "item";
+  @override
+  String get refStringParts => "$name|$source";
 
   @JsonKey(includeFromJson: false, includeToJson: true)
   List<ItemProperty> itemProperties = [];
@@ -51,6 +53,14 @@ class Item extends ItemLike with ReferenceMixin {
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemToJson(this);
+
+  @override
+  bool refCompareImpl(List<String> parts) {
+    return parts.isNotEmpty &&
+        (name.toLowerCase() == parts[0] ||
+            (srd is String && srd.toLowerCase() == parts[0])) &&
+        (parts.length == 1 || source.toLowerCase() == parts[1].toLowerCase());
+  }
 
   @override
   bool searchCompare(String searchString) {
