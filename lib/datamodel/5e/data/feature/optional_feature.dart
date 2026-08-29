@@ -29,8 +29,8 @@ class OptionalFeature extends NamedBaseObject with ReferenceMixin {
   @override
   bool refCompareImpl(List<String> parts) {
     var source = parts.length > 1 ? parts[1] : "";
-    return (name.toLowerCase() == parts[0].toString()) &&
-        (source.isEmpty || this.source.toLowerCase() == source);
+    return (name.toLowerCase() == parts[0].toLowerCase()) &&
+        (source.isEmpty || this.source.toLowerCase() == source.toLowerCase());
   }
 
   factory OptionalFeature.fromJson(Map<String, dynamic> json) =>
