@@ -5,6 +5,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/data_model_5e.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/casting_time.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_components.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_duration.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_range.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/spell/spell_school.dart';
@@ -25,6 +26,7 @@ class Spell extends NamedBaseObject with ReferenceMixin {
     required this.time,
     required this.range,
     required this.duration,
+    required this.components,
     this.entries = const [],
     this.entriesHigherLevel = const [],
     this.spellClassSource,
@@ -35,6 +37,7 @@ class Spell extends NamedBaseObject with ReferenceMixin {
   List<CastingTime> time;
   SpellRange range;
   List<SpellDuration> duration;
+  SpellComponents components;
 
   List<FeatureEntry> entries;
   List<FeatureEntry> entriesHigherLevel;

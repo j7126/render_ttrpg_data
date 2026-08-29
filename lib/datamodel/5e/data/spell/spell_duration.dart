@@ -17,6 +17,14 @@ class SpellDuration {
   SpellDurationTime? duration;
   List<SpellDurationEndCondition>? end;
 
+  String get displayName => switch (type) {
+    SpellDurationType.timed =>
+      duration == null
+          ? "No Duration"
+          : "${duration!.amount} ${duration!.type.name}${duration!.amount > 1 ? "s" : ""}",
+    _ => type.name,
+  };
+
   factory SpellDuration.fromJson(Map<String, dynamic> json) =>
       _$SpellDurationFromJson(json);
 

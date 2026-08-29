@@ -4,10 +4,11 @@ part 'casting_time.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class CastingTime {
-  CastingTime({required this.number, required this.unit});
+  CastingTime({required this.number, required this.unit, this.condition});
 
   int number;
   CastingTimeUnit unit;
+  String? condition;
 
   factory CastingTime.fromJson(Map<String, dynamic> json) =>
       _$CastingTimeFromJson(json);

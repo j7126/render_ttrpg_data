@@ -35,13 +35,18 @@ class SpellView extends StatelessWidget {
           ),
           if (spell.time.isNotEmpty)
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Casting Time: ",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 for (var time in spell.time)
-                  Text("${time.number} ${time.unit.name} "),
+                  Expanded(
+                    child: Text(
+                      "${time.number} ${time.unit.name}${time.condition != null ? ", ${time.condition}" : ""}",
+                    ),
+                  ),
               ],
             ),
           Row(
@@ -62,9 +67,28 @@ class SpellView extends StatelessWidget {
                   "Duration: ",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                for (var duration in spell.duration) Text(duration.type.name),
+                for (var duration in spell.duration) Text(duration.displayName),
               ],
             ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Components: ",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Expanded(
+                child: Text(
+                  [
+                    if (spell.components.verbal) "V",
+                    if (spell.components.somatic) "S",
+                    if (spell.components.material)
+                      "M ${spell.components.materialText ?? ""}",
+                  ].join(", "),
+                ),
+              ),
+            ],
+          ),
           Divider(),
           for (var entry in spell.entries) EntryView(entry: entry, header: 1),
           for (var entry in spell.entriesHigherLevel)

@@ -15,4 +15,13 @@ class SpellDurationTime {
   Map<String, dynamic> toJson() => _$SpellDurationTimeToJson(this);
 }
 
-enum SpellDurationUnit { day, hour, minute, round }
+enum SpellDurationUnit {
+  day("day"),
+  hour("hour"),
+  minute("minute"),
+  round("round");
+
+  const SpellDurationUnit(this.name);
+
+  final String name;
+}

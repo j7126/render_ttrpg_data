@@ -9,12 +9,14 @@ part of 'casting_time.dart';
 CastingTime _$CastingTimeFromJson(Map<String, dynamic> json) => CastingTime(
   number: (json['number'] as num).toInt(),
   unit: $enumDecode(_$CastingTimeUnitEnumMap, json['unit']),
+  condition: json['condition'] as String?,
 );
 
 Map<String, dynamic> _$CastingTimeToJson(CastingTime instance) =>
     <String, dynamic>{
       'number': instance.number,
       'unit': _$CastingTimeUnitEnumMap[instance.unit]!,
+      'condition': instance.condition,
     };
 
 const _$CastingTimeUnitEnumMap = {

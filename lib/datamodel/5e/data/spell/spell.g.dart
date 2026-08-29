@@ -23,6 +23,9 @@ Spell _$SpellFromJson(Map<String, dynamic> json) => Spell(
   duration: (json['duration'] as List<dynamic>)
       .map((e) => SpellDuration.fromJson(e as Map<String, dynamic>))
       .toList(),
+  components: SpellComponents.fromJson(
+    json['components'] as Map<String, dynamic>,
+  ),
   entries:
       (json['entries'] as List<dynamic>?)
           ?.map(FeatureEntry.fromJson)
@@ -50,6 +53,7 @@ Map<String, dynamic> _$SpellToJson(Spell instance) => <String, dynamic>{
   'time': instance.time.map((e) => e.toJson()).toList(),
   'range': instance.range.toJson(),
   'duration': instance.duration.map((e) => e.toJson()).toList(),
+  'components': instance.components.toJson(),
   'entries': instance.entries.map((e) => e.toJson()).toList(),
   'entriesHigherLevel': instance.entriesHigherLevel
       .map((e) => e.toJson())
