@@ -1,6 +1,6 @@
 enum Ability {
   str("Strength"),
-  dex("Dexderity"),
+  dex("Dexterity"),
   con("Constitution"),
   int("Intelligence"),
   wis("Wisdom"),
