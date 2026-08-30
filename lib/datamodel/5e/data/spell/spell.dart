@@ -63,7 +63,7 @@ class Spell extends NamedBaseObject with ReferenceMixin {
     return parts.isNotEmpty &&
         (name.toLowerCase() == parts[0] ||
             (srd is String && srd.toLowerCase() == parts[0])) &&
-        (parts.length == 1 || source.toLowerCase() == parts[1].toLowerCase());
+        (parts.length == 1 || source.toLowerCase() == parts[1]);
   }
 
   void hydrateReferences() {

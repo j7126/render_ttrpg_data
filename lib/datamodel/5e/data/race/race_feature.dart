@@ -38,10 +38,10 @@ class RaceFeature extends FeatureLike {
     if (parts.length != 4) {
       return false;
     }
-    return (parts[0].toLowerCase() == name.toLowerCase()) &&
-        (parts[1].toLowerCase() == source.toLowerCase()) &&
-        (parts[2].toLowerCase() == raceName.toLowerCase()) &&
-        (parts[3].toLowerCase() == raceSource.toLowerCase());
+    return (parts[0] == name.toLowerCase()) &&
+        (parts[1] == source.toLowerCase()) &&
+        (parts[2] == raceName.toLowerCase()) &&
+        (parts[3] == raceSource.toLowerCase());
   }
 
   factory RaceFeature.fromJson(Map<String, dynamic> json) =>

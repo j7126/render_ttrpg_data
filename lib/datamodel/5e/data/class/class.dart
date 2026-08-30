@@ -55,8 +55,8 @@ class Class5e extends NamedBaseObject
 
   @override
   bool refCompareImpl(List<String> parts) {
-    return (parts[0].toLowerCase() == name.toLowerCase()) &&
-        (parts.length > 1 && parts[1].toLowerCase() == source.toLowerCase());
+    return (parts[0] == name.toLowerCase()) &&
+        (parts.length > 1 && parts[1] == source.toLowerCase());
   }
 
   factory Class5e.fromJson(Map<String, dynamic> json) {

@@ -66,8 +66,8 @@ class SubRace extends BaseObject
   @override
   bool refCompareImpl(List<String> parts) {
     return parts.length == 3 &&
-        (raceName.toLowerCase() == parts[0].toLowerCase()) &&
-        (variableName.toLowerCase() == parts[1].toLowerCase()) &&
-        (source.toLowerCase() == parts[2].toLowerCase());
+        (raceName.toLowerCase() == parts[0]) &&
+        (variableName.toLowerCase() == parts[1]) &&
+        (source.toLowerCase() == parts[2]);
   }
 }

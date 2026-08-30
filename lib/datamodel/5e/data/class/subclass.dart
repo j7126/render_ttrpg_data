@@ -48,10 +48,10 @@ class SubClass extends NamedBaseObject
     return parts.length == 4 &&
         (name.toLowerCase() == parts[0] ||
             (srd is String && srd.toLowerCase() == parts[0])) &&
-        className.toLowerCase() == parts[1].toLowerCase() &&
-        (parts[2].isEmpty || source.toLowerCase() == parts[2].toLowerCase()) &&
+        className.toLowerCase() == parts[1] &&
+        (parts[2].isEmpty || source.toLowerCase() == parts[2]) &&
         (parts[3].isEmpty ||
-            classSource.toLowerCase() == parts[3].toLowerCase());
+            classSource.toLowerCase() == parts[3]);
   }
 
   factory SubClass.fromJson(Map<String, dynamic> json) {

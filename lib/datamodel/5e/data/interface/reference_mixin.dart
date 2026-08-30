@@ -10,6 +10,7 @@ mixin ReferenceMixin {
   bool refCompareImpl(List<String> parts);
 
   static List<String>? parseRefString(String searchString, String? refType) {
+    searchString = searchString.toLowerCase();
     RegExp exp = RegExp(r'{(@)([^ ]+) ([^}]+)}');
     var matches = exp.allMatches(searchString);
     if (matches.length == 1 &&
@@ -31,7 +32,9 @@ mixin ReferenceMixin {
 
   @nonVirtual
   bool refCompare(String searchString, {List<String>? preSplitParts}) {
-    var parts = preSplitParts ?? parseRefCurrentString(searchString);
+    var parts =
+        preSplitParts?.map((x) => x.toLowerCase()).toList() ??
+        parseRefCurrentString(searchString);
     return parts != null && parts.isNotEmpty && refCompareImpl(parts);
   }
 }

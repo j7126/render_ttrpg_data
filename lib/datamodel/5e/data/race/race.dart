@@ -55,8 +55,8 @@ class Race extends NamedBaseObject with ReferenceMixin, AbilityBonusMixin {
   @override
   bool refCompareImpl(List<String> parts) {
     return parts.isNotEmpty &&
-        (name.toLowerCase() == parts[0].toLowerCase() ||
+        (name.toLowerCase() == parts[0] ||
             (srd is String && srd.toLowerCase() == parts[0])) &&
-        (parts.length == 1 || source.toLowerCase() == parts[1].toLowerCase());
+        (parts.length == 1 || source.toLowerCase() == parts[1]);
   }
 }
