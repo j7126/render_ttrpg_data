@@ -26,12 +26,14 @@ class TextView extends StatefulWidget {
     this.style,
     this.hiddenEntryTypes = const {},
     this.hintEntities = const [],
+    this.linkMode = LinkTooltipViewMode.link,
   });
 
   final String text;
   final TextStyle? style;
   final Set<FeatureEntryType> hiddenEntryTypes;
   final List<dynamic> hintEntities;
+  final LinkTooltipViewMode linkMode;
 
   @override
   State<TextView> createState() => _TextViewState();
@@ -101,6 +103,7 @@ class _TextViewState extends State<TextView> {
                 contentView: ItemView(item: item, card: false),
                 text: contentParts.length > 2 ? contentParts[2] : itemName,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "condition") {
@@ -135,6 +138,7 @@ class _TextViewState extends State<TextView> {
                 contentView: ConditionView(condition: condition, card: false),
                 text: content,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "spell") {
@@ -169,6 +173,7 @@ class _TextViewState extends State<TextView> {
                 contentView: SpellView(spell: spell, card: false),
                 text: spell.name,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "subclass") {
@@ -203,6 +208,7 @@ class _TextViewState extends State<TextView> {
                 contentView: SubclassView(subclass: subclass, card: false),
                 text: subclass.name,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "classFeature") {
@@ -238,6 +244,7 @@ class _TextViewState extends State<TextView> {
                 ),
                 text: feat.name,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "optfeature") {
@@ -270,6 +277,7 @@ class _TextViewState extends State<TextView> {
                 contentView: OptionalFeatureView(feature: feat, card: false),
                 text: feat.name,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "race") {
@@ -307,6 +315,7 @@ class _TextViewState extends State<TextView> {
                     ? parts[3]
                     : race.name,
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else if (type == "subrace") {
@@ -358,6 +367,7 @@ class _TextViewState extends State<TextView> {
                     ? subRace.raceName
                     : "${subRace.raceName} (${subRace.name})",
                 style: widget.style,
+                linkMode: widget.linkMode,
               ),
             );
     } else {

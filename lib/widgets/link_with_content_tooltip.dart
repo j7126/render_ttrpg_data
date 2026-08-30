@@ -8,6 +8,7 @@ class LinkWithContentTooltip extends StatelessWidget {
     required this.contentView,
     required this.text,
     required this.style,
+    required this.linkMode,
     this.fittedBox = false,
     this.waitDuration = Duration.zero,
   });
@@ -18,22 +19,59 @@ class LinkWithContentTooltip extends StatelessWidget {
   final TextStyle? style;
   final bool fittedBox;
   final Duration waitDuration;
+  final LinkTooltipViewMode linkMode;
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Text(
+    Widget textChild = Text(
       text,
-      style:
-          style?.copyWith(color: ColorScheme.of(context).primary) ??
-          TextStyle(color: ColorScheme.of(context).primary),
+      style: linkMode == LinkTooltipViewMode.link
+          ? style?.copyWith(color: ColorScheme.of(context).primary) ??
+                TextStyle(color: ColorScheme.of(context).primary)
+          : null,
     );
     if (fittedBox) {
-      child = FittedBox(fit: BoxFit.scaleDown, child: child);
+      textChild = FittedBox(fit: BoxFit.scaleDown, child: textChild);
     }
-    return MouseRegion(
+    var tooltipChild = switch (linkMode) {
+      LinkTooltipViewMode.link => textChild,
+      LinkTooltipViewMode.withHelpIcon => Padding(
+        padding: const EdgeInsets.only(left: 8.0),
+        child: Icon(
+          Icons.help_outline,
+          size: 20,
+          color: ColorScheme.of(context).onSurface.withAlpha(150),
+        ),
+      ),
+      LinkTooltipViewMode.helpIcon => Icon(
+        Icons.help_outline,
+        size: 20,
+        color: ColorScheme.of(context).onSurface.withAlpha(150),
+      ),
+    };
+    tooltipChild = GestureDetector(
+      onTapDown: (details) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16.0,
+                  horizontal: 20.0,
+                ),
+                child: SingleChildScrollView(child: contentView),
+              ),
+            );
+          },
+        );
+      },
+      child: tooltipChild,
+    );
+    var mouseRegion = MouseRegion(
       cursor: SystemMouseCursors.click,
       child: TooltipScope.isInTooltip(context)
-          ? child
+          ? tooltipChild
           : Tooltip(
               ignorePointer: false,
               waitDuration: waitDuration,
@@ -50,26 +88,19 @@ class LinkWithContentTooltip extends StatelessWidget {
                   ),
                 ),
               ),
-              child: GestureDetector(
-                onTapDown: (details) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 16.0,
-                            horizontal: 20.0,
-                          ),
-                          child: SingleChildScrollView(child: contentView),
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: child,
-              ),
+              child: tooltipChild,
             ),
     );
+
+    return switch (linkMode) {
+      LinkTooltipViewMode.link => mouseRegion,
+      LinkTooltipViewMode.withHelpIcon => Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [textChild, mouseRegion],
+      ),
+      LinkTooltipViewMode.helpIcon => mouseRegion,
+    };
   }
 }
+
+enum LinkTooltipViewMode { link, withHelpIcon, helpIcon }
