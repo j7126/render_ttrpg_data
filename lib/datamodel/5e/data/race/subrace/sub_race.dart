@@ -29,10 +29,10 @@ class SubRace extends BaseObject
     super.otherSources,
     super.srd,
     this.name,
-    this.size = const [],
+    this.size,
     this.speed,
-    this.entries = const [],
-    this.creatureTypes = const [],
+    this.entries,
+    this.creatureTypes,
     this.heightAndWeight,
     this.age,
   });

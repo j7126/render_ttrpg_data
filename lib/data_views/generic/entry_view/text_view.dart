@@ -318,7 +318,14 @@ class _TextViewState extends State<TextView> {
           .firstWhereOrNull(
             (x) => x.refCompare(content.toLowerCase(), preSplitParts: parts),
           );
-      return subRace == null
+      var race = subRace == null
+          ? null
+          : widget.hintEntities
+                .map((x) => x is Race ? x : null)
+                .nonNulls
+                .followedBy(DataModel5e.races)
+                .firstWhereOrNull((x) => x.refCompare(subRace.raceName));
+      return subRace == null || race == null
           ? TextSpan(
               text: "$content (Unknown Sub Race)",
               style:
@@ -336,12 +343,17 @@ class _TextViewState extends State<TextView> {
               baseline: TextBaseline.alphabetic,
               child: LinkWithContentTooltip(
                 tooltipView: SubRaceView(
+                  race: race,
                   subRace: subRace,
                   card: true,
                   outlined: true,
                   scrollable: true,
                 ),
-                contentView: SubRaceView(subRace: subRace, card: false),
+                contentView: SubRaceView(
+                  race: race,
+                  subRace: subRace,
+                  card: false,
+                ),
                 text: subRace.name == null
                     ? subRace.raceName
                     : "${subRace.raceName} (${subRace.name})",

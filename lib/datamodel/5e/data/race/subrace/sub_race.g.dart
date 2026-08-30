@@ -16,22 +16,16 @@ SubRace _$SubRaceFromJson(Map<String, dynamic> json) =>
             .toList(),
         srd: json['srd'],
         name: json['name'] as String?,
-        size:
-            (json['size'] as List<dynamic>?)
-                ?.map((e) => $enumDecode(_$CreatureSizeEnumMap, e))
-                .toList() ??
-            const [],
+        size: (json['size'] as List<dynamic>?)
+            ?.map((e) => $enumDecode(_$CreatureSizeEnumMap, e))
+            .toList(),
         speed: json['speed'] == null ? null : Speed.fromJson(json['speed']),
-        entries:
-            (json['entries'] as List<dynamic>?)
-                ?.map(FeatureEntry.fromJson)
-                .toList() ??
-            const [],
-        creatureTypes:
-            (json['creatureTypes'] as List<dynamic>?)
-                ?.map((e) => e as String)
-                .toList() ??
-            const [],
+        entries: (json['entries'] as List<dynamic>?)
+            ?.map(FeatureEntry.fromJson)
+            .toList(),
+        creatureTypes: (json['creatureTypes'] as List<dynamic>?)
+            ?.map((e) => e as String)
+            .toList(),
         heightAndWeight: json['heightAndWeight'] == null
             ? null
             : RaceHeightWeight.fromJson(
