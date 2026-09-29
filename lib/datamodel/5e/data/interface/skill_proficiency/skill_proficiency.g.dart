@@ -6,11 +6,15 @@ part of 'skill_proficiency.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$SkillProficiencyToJson(SkillProficiency instance) =>
-    <String, dynamic>{
-      'skills': instance.skills.map((e) => _$SkillEnumMap[e]!).toList(),
-      'chooseNumber': instance.chooseNumber,
-    };
+Map<String, dynamic> _$SkillProficiencyToJson(
+  SkillProficiency instance,
+) => <String, dynamic>{
+  'fixedSkills': instance.fixedSkills.map((e) => _$SkillEnumMap[e]!).toList(),
+  'chooseSkills': instance.chooseSkills.map((e) => _$SkillEnumMap[e]!).toList(),
+  'chooseNumber': instance.chooseNumber,
+  'numAny': instance.numAny,
+  'displayString': instance.displayString,
+};
 
 const _$SkillEnumMap = {
   Skill.athletics: 'athletics',

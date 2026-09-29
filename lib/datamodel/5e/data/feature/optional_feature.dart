@@ -3,11 +3,14 @@ import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency_mixin.dart';
 
 part 'optional_feature.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class OptionalFeature extends NamedBaseObject with ReferenceMixin {
+class OptionalFeature extends NamedBaseObject
+    with ReferenceMixin, SkillProficiencyMixin {
   OptionalFeature({
     required super.name,
     required super.source,

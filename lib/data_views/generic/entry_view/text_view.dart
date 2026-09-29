@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:render_ttrpg_data/data_views/5e/background_view.dart';
+import 'package:render_ttrpg_data/data_views/5e/class_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/condition_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/feature_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
@@ -8,6 +10,8 @@ import 'package:render_ttrpg_data/data_views/5e/race_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/sub_race_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/subclass_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/background/background.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/class/class.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/subclass.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/condition/condition.dart';
@@ -366,6 +370,85 @@ class _TextViewState extends State<TextView> {
                 text: subRace.name == null
                     ? subRace.raceName
                     : "${subRace.raceName} (${subRace.name})",
+                style: widget.style,
+                linkMode: widget.linkMode,
+              ),
+            );
+    } else if (type == "class") {
+      var parts = content.split("|");
+      var class5e = widget.hintEntities
+          .map((x) => x is Class5e ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.classes)
+          .firstWhereOrNull(
+            (x) => x.refCompare(content.toLowerCase(), preSplitParts: parts),
+          );
+      return class5e == null
+          ? TextSpan(
+              text: "$content (Unknown Class)",
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ),
+            )
+          : WidgetSpan(
+              alignment: PlaceholderAlignment.baseline,
+              baseline: TextBaseline.alphabetic,
+              child: LinkWithContentTooltip(
+                tooltipView: ClassView(
+                  class5e: class5e,
+                  card: true,
+                  outlined: true,
+                  scrollable: true,
+                ),
+                contentView: ClassView(class5e: class5e, card: false),
+                text: class5e.name,
+                style: widget.style,
+                linkMode: widget.linkMode,
+              ),
+            );
+    } else if (type == "background") {
+      var parts = content.split("|");
+      var background = widget.hintEntities
+          .map((x) => x is Background ? x : null)
+          .nonNulls
+          .followedBy(DataModel5e.backgrounds)
+          .firstWhereOrNull(
+            (x) => x.refCompare(content.toLowerCase(), preSplitParts: parts),
+          );
+      return background == null
+          ? TextSpan(
+              text: "$content (Unknown Background)",
+              style:
+                  widget.style?.copyWith(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ) ??
+                  TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color
+                        ?.withAlpha(150),
+                  ),
+            )
+          : WidgetSpan(
+              alignment: PlaceholderAlignment.baseline,
+              baseline: TextBaseline.alphabetic,
+              child: LinkWithContentTooltip(
+                tooltipView: BackgroundView(
+                  background: background,
+                  card: true,
+                  outlined: true,
+                  scrollable: true,
+                ),
+                contentView: BackgroundView(
+                  background: background,
+                  card: false,
+                ),
+                text: background.name,
                 style: widget.style,
                 linkMode: widget.linkMode,
               ),

@@ -1,54 +1,36 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/ability_bonus/ability_bonus_mixin.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/creature_size.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/ability_bonus/ability_bonus.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency_mixin.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/race/race_age.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/race/race_height_weight.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/speed.dart';
 
-part 'race.g.dart';
+part 'background.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Race extends NamedBaseObject
-    with ReferenceMixin, AbilityBonusMixin, SkillProficiencyMixin {
-  Race({
+class Background extends NamedBaseObject
+    with ReferenceMixin, SkillProficiencyMixin {
+  Background({
     required super.name,
     required super.source,
     super.page,
     super.otherSources,
     super.srd,
-    this.size = const [],
-    required this.speed,
     this.entries = const [],
-    this.creatureTypes = const [],
-    this.heightAndWeight,
-    this.age,
-    this.lineage,
   });
 
-  List<CreatureSize> size;
-  Speed speed;
   List<FeatureEntry> entries;
-  List<String> creatureTypes;
-  RaceHeightWeight? heightAndWeight;
-  RaceAge? age;
-  int? darkvision;
-  dynamic lineage;
 
   @override
-  String get refType => "race";
+  String get refType => "background";
   @override
   String get refStringParts => "$name|$source";
 
-  factory Race.fromJson(Map<String, dynamic> json) => _$RaceFromJson(json);
+  factory Background.fromJson(Map<String, dynamic> json) =>
+      _$BackgroundFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RaceToJson(this);
+  Map<String, dynamic> toJson() => _$BackgroundToJson(this);
 
   bool searchCompare(String searchString) {
     return name.toLowerCase().contains(searchString) ||

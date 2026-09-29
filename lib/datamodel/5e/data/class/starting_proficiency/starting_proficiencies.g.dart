@@ -8,15 +8,14 @@ part of 'starting_proficiencies.dart';
 
 ClassStartingProficiencies _$ClassStartingProficienciesFromJson(
   Map<String, dynamic> json,
-) =>
-    ClassStartingProficiencies(
-        armor: (json['armor'] as List<dynamic>?)
-            ?.map(ArmorProficiency.fromJson)
-            .toList(),
-      )
-      ..skills = (json['skills'] as List<dynamic>?)
-          ?.map(SkillProficiency.fromJson)
-          .toList();
+) => ClassStartingProficiencies(
+  armor: (json['armor'] as List<dynamic>?)
+      ?.map(ArmorProficiency.fromJson)
+      .toList(),
+  skills: (json['skills'] as List<dynamic>?)
+      ?.map(SkillProficiency.fromJson)
+      .toList(),
+);
 
 Map<String, dynamic> _$ClassStartingProficienciesToJson(
   ClassStartingProficiencies instance,

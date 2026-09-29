@@ -8,13 +8,18 @@ import 'package:render_ttrpg_data/datamodel/5e/data/dice.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/optional_feature_progression_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/optional_feature_progression.dart';
 
 part 'class.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Class5e extends NamedBaseObject
-    with ReferenceMixin, OptionalFeatureProgressionMixin {
+    with
+        ReferenceMixin,
+        OptionalFeatureProgressionMixin,
+        SkillProficiencyMixin {
   Class5e({
     required super.name,
     required super.source,
@@ -38,6 +43,16 @@ class Class5e extends NamedBaseObject
   List<int>? spellsKnownProgression;
   ClassStartingProficiencies? startingProficiencies;
   String? preparedSpells;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  List<SkillProficiency>? get skillProficiencies =>
+      startingProficiencies?.skills;
+  @override
+  set skillProficiencies(val) {
+    startingProficiencies ??= ClassStartingProficiencies();
+    startingProficiencies!.skills = val;
+  }
 
   @override
   String get refType => "class";

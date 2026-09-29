@@ -1,3 +1,4 @@
+import 'package:render_ttrpg_data/datamodel/5e/data/background/background.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/class_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/subclass.dart';
@@ -37,4 +38,7 @@ class DataModel5e {
   // races
   static List<Race> races = [];
   static List<SubRace> subRaces = [];
+
+  // background
+  static List<Background> backgrounds = [];
 }

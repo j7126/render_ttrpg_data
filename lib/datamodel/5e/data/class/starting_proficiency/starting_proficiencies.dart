@@ -1,12 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/class/starting_proficiency/armor_proficiency.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/class/starting_proficiency/skill_proficiency.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency.dart';
 
 part 'starting_proficiencies.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ClassStartingProficiencies {
-  ClassStartingProficiencies({this.armor});
+  ClassStartingProficiencies({this.armor, this.skills});
 
   List<ArmorProficiency>? armor;
   List<SkillProficiency>? skills;

@@ -45,6 +45,9 @@ Race _$RaceFromJson(Map<String, dynamic> json) =>
       ..ability = (json['ability'] as List<dynamic>?)
           ?.map((e) => AbilityBonus.fromJson(e as Map<String, dynamic>))
           .toList()
+      ..skillProficiencies = (json['skillProficiencies'] as List<dynamic>?)
+          ?.map(SkillProficiency.fromJson)
+          .toList()
       ..darkvision = (json['darkvision'] as num?)?.toInt();
 
 Map<String, dynamic> _$RaceToJson(Race instance) => <String, dynamic>{
@@ -55,6 +58,9 @@ Map<String, dynamic> _$RaceToJson(Race instance) => <String, dynamic>{
   'basicRules': instance.basicRules,
   'name': instance.name,
   'ability': instance.ability?.map((e) => e.toJson()).toList(),
+  'skillProficiencies': instance.skillProficiencies
+      ?.map((e) => e.toJson())
+      .toList(),
   'size': instance.size.map((e) => _$CreatureSizeEnumMap[e]!).toList(),
   'speed': instance.speed.toJson(),
   'entries': instance.entries.map((e) => e.toJson()).toList(),

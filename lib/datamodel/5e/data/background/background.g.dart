@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'optional_feature.dart';
+part of 'background.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-OptionalFeature _$OptionalFeatureFromJson(Map<String, dynamic> json) =>
-    OptionalFeature(
+Background _$BackgroundFromJson(Map<String, dynamic> json) =>
+    Background(
         name: json['name'] as String,
         source: json['source'] as String,
         page: (json['page'] as num?)?.toInt(),
@@ -15,9 +15,6 @@ OptionalFeature _$OptionalFeatureFromJson(Map<String, dynamic> json) =>
             ?.map((e) => BookSource.fromJson(e as Map<String, dynamic>))
             .toList(),
         srd: json['srd'],
-        featureType: (json['featureType'] as List<dynamic>)
-            .map((e) => e as String)
-            .toList(),
         entries:
             (json['entries'] as List<dynamic>?)
                 ?.map(FeatureEntry.fromJson)
@@ -29,7 +26,7 @@ OptionalFeature _$OptionalFeatureFromJson(Map<String, dynamic> json) =>
           ?.map(SkillProficiency.fromJson)
           .toList();
 
-Map<String, dynamic> _$OptionalFeatureToJson(OptionalFeature instance) =>
+Map<String, dynamic> _$BackgroundToJson(Background instance) =>
     <String, dynamic>{
       'source': instance.source,
       'page': instance.page,
@@ -40,6 +37,5 @@ Map<String, dynamic> _$OptionalFeatureToJson(OptionalFeature instance) =>
       'skillProficiencies': instance.skillProficiencies
           ?.map((e) => e.toJson())
           .toList(),
-      'featureType': instance.featureType,
       'entries': instance.entries.map((e) => e.toJson()).toList(),
     };
