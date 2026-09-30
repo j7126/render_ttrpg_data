@@ -27,6 +27,9 @@ OptionalFeature _$OptionalFeatureFromJson(Map<String, dynamic> json) =>
       ..basicRules = json['basicRules'] as bool?
       ..skillProficiencies = (json['skillProficiencies'] as List<dynamic>?)
           ?.map(SkillProficiency.fromJson)
+          .toList()
+      ..additionalSpells = (json['additionalSpells'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
           .toList();
 
 Map<String, dynamic> _$OptionalFeatureToJson(OptionalFeature instance) =>
@@ -40,6 +43,7 @@ Map<String, dynamic> _$OptionalFeatureToJson(OptionalFeature instance) =>
       'skillProficiencies': instance.skillProficiencies
           ?.map((e) => e.toJson())
           .toList(),
+      'additionalSpells': instance.additionalSpells,
       'featureType': instance.featureType,
       'entries': instance.entries.map((e) => e.toJson()).toList(),
     };

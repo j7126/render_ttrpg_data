@@ -1,16 +1,22 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/additional_spells_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/source_label_mixin.dart';
 
 part 'optional_feature.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class OptionalFeature extends NamedBaseObject
-    with ReferenceMixin, SkillProficiencyMixin {
+    with
+        ReferenceMixin,
+        SkillProficiencyMixin,
+        SourceLabelMixin,
+        AdditionalSpellsMixin {
   OptionalFeature({
     required super.name,
     required super.source,
@@ -28,6 +34,9 @@ class OptionalFeature extends NamedBaseObject
   String get refType => "optfeature";
   @override
   String get refStringParts => "$name|$source";
+
+  @override
+  String get sourceLabel => name;
 
   @override
   bool refCompareImpl(List<String> parts) {
