@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/feature_like.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/prerequisite/prerequisite.dart';
 
 part 'race_feature.g.dart';
 

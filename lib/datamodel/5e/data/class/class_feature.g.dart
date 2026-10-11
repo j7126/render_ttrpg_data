@@ -28,6 +28,9 @@ ClassFeature5e _$ClassFeature5eFromJson(Map<String, dynamic> json) =>
         subclassSource: json['subclassSource'] as String?,
       )
       ..basicRules = json['basicRules'] as bool?
+      ..prerequisite = (json['prerequisite'] as List<dynamic>?)
+          ?.map((e) => Prerequisite.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..additionalSpells = (json['additionalSpells'] as List<dynamic>?)
           ?.map((e) => e as Map<String, dynamic>)
           .toList();
@@ -40,6 +43,7 @@ Map<String, dynamic> _$ClassFeature5eToJson(ClassFeature5e instance) =>
       'srd': instance.srd,
       'basicRules': instance.basicRules,
       'name': instance.name,
+      'prerequisite': instance.prerequisite?.map((e) => e.toJson()).toList(),
       'additionalSpells': instance.additionalSpells,
       'header': instance.header,
       'entries': instance.entries.map((e) => e.toJson()).toList(),

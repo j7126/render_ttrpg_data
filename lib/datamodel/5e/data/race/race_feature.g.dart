@@ -6,23 +6,28 @@ part of 'race_feature.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RaceFeature _$RaceFeatureFromJson(Map<String, dynamic> json) => RaceFeature(
-  name: json['name'] as String,
-  source: json['source'] as String,
-  page: (json['page'] as num?)?.toInt(),
-  otherSources: (json['otherSources'] as List<dynamic>?)
-      ?.map((e) => BookSource.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  srd: json['srd'],
-  raceName: json['raceName'] as String,
-  raceSource: json['raceSource'] as String,
-  header: (json['header'] as num?)?.toInt() ?? 0,
-  entries:
-      (json['entries'] as List<dynamic>?)
-          ?.map(FeatureEntry.fromJson)
-          .toList() ??
-      const [],
-)..basicRules = json['basicRules'] as bool?;
+RaceFeature _$RaceFeatureFromJson(Map<String, dynamic> json) =>
+    RaceFeature(
+        name: json['name'] as String,
+        source: json['source'] as String,
+        page: (json['page'] as num?)?.toInt(),
+        otherSources: (json['otherSources'] as List<dynamic>?)
+            ?.map((e) => BookSource.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        srd: json['srd'],
+        raceName: json['raceName'] as String,
+        raceSource: json['raceSource'] as String,
+        header: (json['header'] as num?)?.toInt() ?? 0,
+        entries:
+            (json['entries'] as List<dynamic>?)
+                ?.map(FeatureEntry.fromJson)
+                .toList() ??
+            const [],
+      )
+      ..basicRules = json['basicRules'] as bool?
+      ..prerequisite = (json['prerequisite'] as List<dynamic>?)
+          ?.map((e) => Prerequisite.fromJson(e as Map<String, dynamic>))
+          .toList();
 
 Map<String, dynamic> _$RaceFeatureToJson(RaceFeature instance) =>
     <String, dynamic>{
@@ -32,6 +37,7 @@ Map<String, dynamic> _$RaceFeatureToJson(RaceFeature instance) =>
       'srd': instance.srd,
       'basicRules': instance.basicRules,
       'name': instance.name,
+      'prerequisite': instance.prerequisite?.map((e) => e.toJson()).toList(),
       'header': instance.header,
       'entries': instance.entries.map((e) => e.toJson()).toList(),
       'raceName': instance.raceName,

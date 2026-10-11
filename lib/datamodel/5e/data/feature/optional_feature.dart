@@ -1,22 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/additional_spells_mixin.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/interface/feature_like.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/skill_proficiency/skill_proficiency_mixin.dart';
-import 'package:render_ttrpg_data/datamodel/5e/data/interface/source_label_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/prerequisite/prerequisite.dart';
 
 part 'optional_feature.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class OptionalFeature extends NamedBaseObject
-    with
-        ReferenceMixin,
-        SkillProficiencyMixin,
-        SourceLabelMixin,
-        AdditionalSpellsMixin {
+class OptionalFeature extends FeatureLike
+    with SkillProficiencyMixin, AdditionalSpellsMixin {
   OptionalFeature({
     required super.name,
     required super.source,
@@ -24,11 +19,11 @@ class OptionalFeature extends NamedBaseObject
     super.otherSources,
     super.srd,
     required this.featureType,
-    this.entries = const [],
+    super.entries = const [],
+    super.header = 1,
   });
 
   List<String> featureType;
-  List<FeatureEntry> entries;
 
   @override
   String get refType => "optfeature";
@@ -37,6 +32,9 @@ class OptionalFeature extends NamedBaseObject
 
   @override
   String get sourceLabel => name;
+
+  @override
+  int get order => 0;
 
   @override
   bool refCompareImpl(List<String> parts) {

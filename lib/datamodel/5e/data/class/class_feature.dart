@@ -5,6 +5,7 @@ import 'package:render_ttrpg_data/datamodel/5e/data/interface/additional_spells_
 import 'package:render_ttrpg_data/datamodel/5e/data/book_source.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/feature_like.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/prerequisite/prerequisite.dart';
 
 part 'class_feature.g.dart';
 

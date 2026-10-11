@@ -3,9 +3,10 @@ import 'package:render_ttrpg_data/datamodel/5e/data/interface/base_object.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/reference_mixin.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/source_label_mixin.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/prerequisite/prerequisite_mixin.dart';
 
 abstract class FeatureLike extends NamedBaseObject
-    with SourceLabelMixin, ReferenceMixin {
+    with SourceLabelMixin, ReferenceMixin, PrerequisiteMixin {
   FeatureLike({
     required super.name,
     required super.source,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:render_ttrpg_data/data_views/5e/optional_feature_view.dart';
+import 'package:render_ttrpg_data/data_views/5e/feature_view.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 
 class RefOptionalFeatureView extends StatelessWidget {
@@ -15,7 +15,7 @@ class RefOptionalFeatureView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (entry.referencedOptionalFeature != null) {
-      return OptionalFeatureView(
+      return FeatureView(
         feature: entry.referencedOptionalFeature!,
         card: false,
         header: header,

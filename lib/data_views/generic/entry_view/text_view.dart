@@ -5,7 +5,6 @@ import 'package:render_ttrpg_data/data_views/5e/class_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/condition_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/feature_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/item_view.dart';
-import 'package:render_ttrpg_data/data_views/5e/optional_feature_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/race_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/spell_view.dart';
 import 'package:render_ttrpg_data/data_views/5e/sub_race_view.dart';
@@ -272,13 +271,13 @@ class _TextViewState extends State<TextView> {
               alignment: PlaceholderAlignment.baseline,
               baseline: TextBaseline.alphabetic,
               child: LinkWithContentTooltip(
-                tooltipView: OptionalFeatureView(
+                tooltipView: FeatureView(
                   feature: feat,
                   card: true,
                   outlined: true,
                   scrollable: true,
                 ),
-                contentView: OptionalFeatureView(feature: feat, card: false),
+                contentView: FeatureView(feature: feat, card: false),
                 text: feat.name,
                 style: widget.style,
                 linkMode: widget.linkMode,

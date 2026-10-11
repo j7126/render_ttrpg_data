@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:render_ttrpg_data/data_views/generic/entry_view/entry_view.dart';
+import 'package:render_ttrpg_data/data_views/generic/entry_view/text_view.dart';
+import 'package:render_ttrpg_data/datamodel/5e/data/feature/optional_feature.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/generic/entry.dart';
 import 'package:render_ttrpg_data/datamodel/5e/data/interface/feature_like.dart';
 import 'package:render_ttrpg_data/theme/text_style_extension.dart';
@@ -16,6 +18,7 @@ class FeatureView extends StatelessWidget {
     this.collapsible = false,
     this.outlined = false,
     this.scrollable = false,
+    this.header,
     this.hiddenEntryTypes = const {},
     this.shouldReplaceEntryViewFunc,
     this.entryViewReplacementBuilder,
@@ -28,6 +31,7 @@ class FeatureView extends StatelessWidget {
   final bool collapsible;
   final bool outlined;
   final bool scrollable;
+  final int? header;
   final Set<FeatureEntryType> hiddenEntryTypes;
   final bool Function(FeatureEntry entry)? shouldReplaceEntryViewFunc;
   final Widget? Function(BuildContext context, FeatureEntry entry)?
@@ -39,16 +43,41 @@ class FeatureView extends StatelessWidget {
       children: [
         Text(
           feature.name,
-          style: TextStyles.of(context).getHeadline(feature.header),
+          style: TextStyles.of(context).getHeadline(header ?? feature.header),
         ),
         Spacer(),
         Text(
-          feature.sourceLabel,
+          feature is OptionalFeature ? "optional feature" : feature.sourceLabel,
           style: TextTheme.of(context).bodyMedium?.withAlpha(200),
         ),
       ],
     );
+    var prerequisiteStrings = feature.prerequisite
+        ?.map((x) => x.getDisplayString())
+        .nonNulls
+        .toList();
     var children = <Widget>[
+      if (prerequisiteStrings?.isNotEmpty == true)
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              "Prerequisite: ",
+              style: TextStyles.of(context).getHeadline(2),
+            ),
+            for (var i = 0; i < prerequisiteStrings!.length; i++) ...[
+              TextView(prerequisiteStrings[i]),
+              if (i < prerequisiteStrings.length - 1)
+                Text(
+                  " or ",
+                  style: TextStyle(
+                    color: ColorScheme.of(context).onSurface.withAlpha(150),
+                  ),
+                ),
+            ],
+          ],
+        ),
       for (var entry in feature.entries)
         if (entryViewReplacementBuilder != null &&
             (shouldReplaceEntryViewFunc?.call(entry) ?? false))
@@ -56,7 +85,7 @@ class FeatureView extends StatelessWidget {
         else
           EntryView(
             entry: entry,
-            header: feature.header,
+            header: header ?? feature.header,
             hiddenEntryTypes: hiddenEntryTypes,
           ),
     ];
